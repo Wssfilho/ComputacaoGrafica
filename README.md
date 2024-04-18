@@ -26,7 +26,7 @@ In linux
 ./
 ```
 
-where `<threshold>` is the value that will be used to determine if a pixel has changed or not.
+where `<>` is the value that will be used to determine if a pixel has changed or not.
 
 ## License
 
