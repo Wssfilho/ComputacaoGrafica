@@ -26,7 +26,6 @@ In linux
 ./
 ```
 
-where `<>` is the value that will be used to determine if a pixel has changed or not.
 
 ## License
 
