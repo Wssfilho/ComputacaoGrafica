@@ -44,7 +44,6 @@ void display(void){
     glVertex2f(0.25,0.25); //1 quad
     glVertex2f(0.25,0.75); //4 quad
     glVertex2f(-0.25,0.75); //3quad
-    
   glEnd();
   glFlush(); ////Executa os comandos OpenGL para renderização
 }
