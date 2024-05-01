@@ -13,10 +13,10 @@ int main(int argc, char** argv){
   glutInit(&argc, argv); //Estabelece contato com sistema de janelas
   glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB); //Cores dos pixels serão expressos em RGB
   glutInitWindowSize (800, 800); //Posição inicial do canto superior esquerdo da janela a ser criada
-  glutInitWindowPosition (00, 00); //Estabelece o tamanho (em pixels) da janela a ser criada
+  glutInitWindowPosition (400, 200); //Estabelece o tamanho (em pixels) da janela a ser criada
   glutCreateWindow (argv[0]); //Cria uma nova janela com valor de retorno (não usado)
   // que a identifica, caso tenha mais de uma
-  glClearColor(1.0, 0.0, 1.0, 0.0); //selecionar cor de fundo (Branco)
+  glClearColor(1.0, 1.0, 0.0, 0.0); //selecionar cor de fundo (Branco)
   glOrtho (-1, 1,-1, 1, -1 ,1); //define as coordenadas do volume de recorte (clipping volume),
   glutDisplayFunc(display); //Função callback chamada para fazer o desenho
   glutKeyboardFunc(keyboard); //Chamada sempre que uma tecla for precionada
@@ -40,10 +40,10 @@ void display(void){
   //glBegin(GL_TRIANGLE_STRIP);
   //glBegin(GL_TRIANGLE_FAN);
   glBegin(GL_POLYGON);
-    glVertex2f(0.25,0.25);
-    glVertex2f(0.75,0.25);
-    glVertex2f(0.75,0.75);
-    glVertex2f(0.25,0.75);
+    glVertex2f(-0.25,0.25); //2 quad
+    glVertex2f(0.25,0.25); //1 quad
+    glVertex2f(0.25,0.75); //4 quad
+    glVertex2f(-0.25,0.75); //3quad
   glEnd();
   glFlush(); ////Executa os comandos OpenGL para renderização
 }
