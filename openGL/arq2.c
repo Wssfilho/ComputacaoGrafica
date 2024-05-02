@@ -53,7 +53,7 @@ void desenharContornoFacial(int opcao)
 void desenharCabelos(int opcao) {
   switch (opcao) {
     case 1:
-  glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 0.0, 0.0);
     glBegin(GL_LINES);
         // Linha 1: Ponto inicial (-0.25, 0.25) para o primeiro ponto (-0.15, 0.45)
         glVertex2f(-0.25, 0.25);
