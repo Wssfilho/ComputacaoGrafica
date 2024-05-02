@@ -122,7 +122,7 @@ void desenharOlhos(int opcao)
   switch (opcao)
   {
     case 1:
-    glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
                 glVertex2f(-0.1, -0.1); // inferior esquerdo
                 glVertex2f(0.1, -0.1);  // inferior direito
@@ -177,7 +177,25 @@ void keyboard(unsigned char key, int x, int y)
   printf(">>> Tecla pressionada: %c\n", key);
   switch (key)
   {
-
+    case 49:
+    olhos = 1;
+    glutPostRedisplay();
+    break;
+    case 50:
+    glutPostRedisplay();
+    break;
+    case 51:
+    glutPostRedisplay();
+    break;
+    case 52:
+    glutPostRedisplay();
+    break;
+    case 53:
+    glutPostRedisplay();
+    break;
+    case 54:
+    glutPostRedisplay();
+    break;
     // Continue para outras teclas específicas
   }
 }
