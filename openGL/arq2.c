@@ -21,7 +21,7 @@ void keyboard(unsigned char key, int x, int y);
 
 int main(int argc, char** argv){
   glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+  glutInitDisplayMode(GLUT_SINGLE);
   glutInitWindowSize(800, 800);
   glutInitWindowPosition(00, 00);
   glutCreateWindow(argv[0]);
