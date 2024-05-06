@@ -213,7 +213,7 @@ void desenharOlhos(int opcao)
       glVertex2f(-0.2, 0.15);  // superior esquerdo
       glVertex2f(-0.1, 0.15);  // inferior direito
       glEnd();
-       glBegin(GL_LINE_LOOP);
+      glBegin(GL_LINE_LOOP);
       glVertex2f(0.05, 0.2); // inferior esquerdo
       glVertex2f(0.1, 0.25);  // inferior direito
       glVertex2f(0.2, 0.25);  // inferior direito
