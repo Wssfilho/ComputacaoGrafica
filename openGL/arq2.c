@@ -73,9 +73,6 @@ void desenharContornoFacial(int opcao)
     glVertex2f(0.2, -0.1);  // inferior direito
     glVertex2f(0.4, 0.4);  // inferior direito
     glVertex2f(0.3, 0.3);  // inferior direito
-
-
-    
   glEnd();
     break;
   case 4:
