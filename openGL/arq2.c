@@ -303,8 +303,7 @@ void desenharSobrancelha(char opcao)
     glPopMatrix();
     glLineWidth(1.0);
     break;
-  default:
-    break;
+
   }
   // Implemente conforme necessário
 }
