@@ -84,7 +84,7 @@ void desenharContornoFacial(int opcao)
     glVertex2f(-0.30, -0.10);
     break;
   case 5:
-  glColor3f(0.0, 0.0, 0.0);
+    glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_POLYGON);
     glVertex2f(-0.4, -0.4); // inferior esquerdo
     glVertex2f(0.4, -0.4);  // inferior direito
@@ -336,35 +336,14 @@ void keyboard(unsigned char key, int x, int y)
   printf("*** Tratamento de teclas comuns\n");
   printf(">>> Tecla pressionada: %c\n", key);
 
-  //if (key >= 49 && key <= 54) {
-    //olhos = key - 49 + 1;
-  //}
+  if (key >= 49 && key <= 54)
+  {
+    olhos = key - 49 + 1;
+  }
+  glutPostRedisplay();
+
   switch (key)
   {
-  case 49:
-    olhos = 1;
-    glutPostRedisplay();
-    break;
-  case 50:
-    olhos = 2;
-    glutPostRedisplay();
-    break;
-  case 51:
-    olhos = 3;
-    glutPostRedisplay();
-    break;
-  case 52:
-    olhos = 4;
-    glutPostRedisplay();
-    break;
-  case 53:
-    olhos = 5;
-    glutPostRedisplay();
-    break;
-  case 54:
-    olhos = 6;
-    glutPostRedisplay();
-    break;
   // sombr:
   case 97:
     sobrancelha = 1;
@@ -390,109 +369,65 @@ void keyboard(unsigned char key, int x, int y)
     sobrancelha = 6;
     glutPostRedisplay();
     break;
-  //boca
-    case 113:
+    // boca
+  case 113:
     boca = 1;
     glutPostRedisplay();
-  break;
+    break;
   case 119:
     boca = 2;
     glutPostRedisplay();
-  break;
+    break;
   case 101:
     boca = 3;
     glutPostRedisplay();
-  break;
+    break;
   case 114:
     boca = 4;
     glutPostRedisplay();
-  break;
+    break;
   case 116:
     boca = 5;
     glutPostRedisplay();
-  break;
+    break;
   case 121:
     boca = 6;
     glutPostRedisplay();
-  break;
+    break;
   case 112:
     nariz = 1;
     glutPostRedisplay();
-  break;
+    break;
   case 120:
     nariz = 2;
     glutPostRedisplay();
-  break;
+    break;
   case 99:
     nariz = 3;
     glutPostRedisplay();
-  break;
+    break;
   case 118:
     nariz = 4;
     glutPostRedisplay();
-  break;
+    break;
   case 98:
     nariz = 5;
     glutPostRedisplay();
-  break;
+    break;
   case 110:
     nariz = 6;
     glutPostRedisplay();
-  break;
+    break;
   }
-
 }
+
 void Special_keyboard(GLint tecla, int x, int y)
 {
-  switch (tecla)
-  {
-  case GLUT_KEY_F1:
-    contornoFacial = 1;
-    glutPostRedisplay();
-    break;
-  case GLUT_KEY_F2:
-    contornoFacial = 2;
-    glutPostRedisplay();
-    break;
-  case GLUT_KEY_F3:
-    contornoFacial = 3;
-    glutPostRedisplay();
-    break;
-  case GLUT_KEY_F4:
-    contornoFacial = 4;
-    glutPostRedisplay();
-    break;
-  case GLUT_KEY_F5:
-    contornoFacial = 5;
-    glutPostRedisplay();
-    break;
-  case GLUT_KEY_F6:
-    contornoFacial = 6;
-    glutPostRedisplay();
-    break;
-  case GLUT_KEY_F7:
-    cabelos = 1;
-    glutPostRedisplay();
-    break;
-  case GLUT_KEY_F8:
-    cabelos = 2;
-    glutPostRedisplay();
-    break;
-  case GLUT_KEY_F9:
-    cabelos = 3;
-    glutPostRedisplay();
-    break;
-  case GLUT_KEY_F10:
-    cabelos = 4;
-    glutPostRedisplay();
-    break;
-  case GLUT_KEY_F11:
-    cabelos = 5;
-    glutPostRedisplay();
-    break;
-  case GLUT_KEY_F12:
-    cabelos = 6;
-    glutPostRedisplay();
-    break;
-  }
+  if (tecla >= GLUT_KEY_F1 && tecla <= GLUT_KEY_F6)
+    contornoFacial = tecla - GLUT_KEY_F1 + 1;
+
+  if (tecla >= GLUT_KEY_F7 && tecla <= GLUT_KEY_F12)
+    cabelos = tecla - GLUT_KEY_F7 + 1;
+
+  glutPostRedisplay();
 }
