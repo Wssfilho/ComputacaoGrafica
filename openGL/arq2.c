@@ -256,8 +256,6 @@ void desenharOlhos(int opcao)
     }
     glEnd();
     glPopMatrix();
-
-   
     break;
   }
 }
