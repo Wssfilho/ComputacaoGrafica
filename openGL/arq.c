@@ -1,14 +1,15 @@
 #include <GL/glut.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 // Variáveis globais para rastrear as opções selecionadas pelo usuário
-int contornoFacial;
-int cabelos;
-int olhos;
-char boca;
-char sobrancelha;
-char nariz;
+int contornoFacial = 1;
+int cabelos = 1;
+int olhos = 1;
+char boca = 1;
+char sobrancelha = 1;
+char nariz = 1;
 
 void desenharContornoFacial(int opcao);
 void desenharCabelos(int opcao);
@@ -42,53 +43,56 @@ void desenharContornoFacial(int opcao)
   switch (opcao)
   {
   case 1:
-  glColor3f(0.0, 0.0, 0);
-  glBegin(GL_POLYGON);
-    glVertex2f(-0.4, 0.4); // inferior esquerdo
-    glVertex2f(-0.4, -0.2);  // inferior direito
+    glColor3f(0.87, 0.72, 0.63);
+    glBegin(GL_POLYGON);
+    glVertex2f(-0.4, 0.4);  // inferior esquerdo
+    glVertex2f(-0.4, -0.2); // inferior direito
     glVertex2f(0.0, -0.4);  // superior esquerdo
-    glVertex2f(0.4, -0.2);   // superior direito
-    glVertex2f(0.4, 0.4);  // superior esquerdo
-  glEnd();
+    glVertex2f(0.4, -0.2);  // superior direito
+    glVertex2f(0.4, 0.4);   // superior esquerdo
+    glEnd();
     break;
   case 2:
-  glColor3f(0.0, 0.0, 0);
-   glBegin(GL_POLYGON);
-    glVertex2f(-0.4, 0.4); // inferior esquerdo
-    glVertex2f(-0.3, -0.3);  // inferior direito
+    glColor3f(0.0, 0.0, 0);
+    glBegin(GL_POLYGON);
+    glVertex2f(-0.4, 0.4);  // inferior esquerdo
+    glVertex2f(-0.3, -0.3); // inferior direito
     glVertex2f(0.0, -0.4);  // superior esquerdo
-    glVertex2f(0.3, -0.3);   // superior direito
-    glVertex2f(0.4, 0.4);  // superior esquerdo
-  glEnd();
+    glVertex2f(0.3, -0.3);  // superior direito
+    glVertex2f(0.4, 0.4);   // superior esquerdo
+    glEnd();
     break;
   case 3:
-  glColor3f(0.0, 0.0, 0);
-   glBegin(GL_POLYGON);
-    glVertex2f(-0.4, 0.4); // inferior esquerdo
+    glColor3f(0.0, 0.0, 0);
+    glBegin(GL_POLYGON);
+    glVertex2f(-0.4, 0.4);  // inferior esquerdo
     glVertex2f(-0.3, 0.3);  // inferior direito
-    glVertex2f(-0.2, -0.1);  // inferior direito
-    glVertex2f(-0.1, -0.3);  // inferior direito
+    glVertex2f(-0.2, -0.1); // inferior direito
+    glVertex2f(-0.1, -0.3); // inferior direito
     glVertex2f(0.0, -0.4);  // superior esquerdo
     glVertex2f(0.1, -0.3);  // inferior direito
     glVertex2f(0.2, -0.1);  // inferior direito
-    glVertex2f(0.4, 0.4);  // inferior direito
-    glVertex2f(0.3, 0.3);  // inferior direito
-  glEnd();
+    glVertex2f(0.4, 0.4);   // inferior direito
+    glVertex2f(0.3, 0.3);   // inferior direito
+    glEnd();
     break;
   case 4:
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE);
+    glVertex2f(-0.40, -0.40);
+    glVertex2f(-0.40, 0.10);
+    glVertex2f(-0.30, -0.10);
     break;
   case 5:
-    break;
-  case 6:
-    break;
-  default:
-    glColor3f(0.0, 0.0, 0.0);
+  glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_POLYGON);
     glVertex2f(-0.4, -0.4); // inferior esquerdo
     glVertex2f(0.4, -0.4);  // inferior direito
     glVertex2f(0.4, 0.4);   // superior direito
-    glVertex2f(-0.4, 0.4);  // superior esquerdo
+    glVertex2d(-0.4, 0.4);
     glEnd();
+    break;
+  case 6:
     break;
   }
 }
@@ -98,98 +102,68 @@ void desenharCabelos(int opcao)
   switch (opcao)
   {
   case 1:
-    glColor3f(1.0, 0.0, 0.0);
-    glBegin(GL_LINES);
-    // Linha 1: Ponto inicial (-0.25, 0.25) para o primeiro ponto (-0.15, 0.45)
-    glVertex2f(-0.4, 0.4);
-    glVertex2f(-0.15, 0.45);
-
-    // Linha 2: Ponto inicial (-0.15, 0.45) para o segundo ponto (0, 0.25)
-    glVertex2f(-0.15, 0.45);
-    glVertex2f(0, 0.4);
-
-    // Linha 3: Ponto inicial (0, 0.25) para o terceiro ponto (0.15, 0.45)
-    glVertex2f(0, 0.4);
-    glVertex2f(0.15, 0.45);
-
-    // Linha 4: Ponto inicial (0.15, 0.45) para o último ponto (0.25, 0.25)
-    glVertex2f(0.15, 0.45);
-    glVertex2f(0.4, 0.4);
-    glEnd();
     break;
   case 2:
-    glColor3f(0.0, 0.0, 0.0);
-    glBegin(GL_TRIANGLES);
-    glVertex2f(-0.4, 0.4); // base esquerda
-    glVertex2f(0.4, 0.4);  // base direita
-    glVertex2f(0.0, 0.5);    // topo
-    glEnd();
     break;
   case 3:
-    glColor3f(0.0, 0.0, 0.0);
-    glBegin(GL_LINES);
-    glVertex2f(-0.4, 0.4); // base esquerda
-    glVertex2f(0.0, 0.5);    // topo
-    glVertex2f(0.4, 0.4);  // base direita
-    glEnd();
     break;
   case 4:
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINES);
     glVertex2f(0.4, 0.4); // base esquerda
-    glVertex2f(0.4, 0.5);  // base direita
+    glVertex2f(0.4, 0.5); // base direita
 
     glVertex2f(0.35, 0.4); // base esquerda
-    glVertex2f(0.35, 0.5);  // base direita
+    glVertex2f(0.35, 0.5); // base direita
     glVertex2f(0.30, 0.4); // base esquerda
-    glVertex2f(0.30, 0.5);  // base direita
+    glVertex2f(0.30, 0.5); // base direita
 
     glVertex2f(0.25, 0.4); // base esquerda
-    glVertex2f(0.25, 0.5);  // base direita
+    glVertex2f(0.25, 0.5); // base direita
 
-    glVertex2f(0.20, 0.4); // base esquerda
+    glVertex2f(0.20, 0.4);  // base esquerda
     glVertex2f(0.20, 0.5);  // base direita
-    glVertex2f(0.15, 0.4); // base esquerda
+    glVertex2f(0.15, 0.4);  // base esquerda
     glVertex2f(0.15, 0.5);  // base direita
-    glVertex2f(0.10, 0.4); // base esquerda
+    glVertex2f(0.10, 0.4);  // base esquerda
     glVertex2f(0.10, 0.5);  // base direita
-    glVertex2f(0.05, 0.4); // base esquerda
+    glVertex2f(0.05, 0.4);  // base esquerda
     glVertex2f(0.05, 0.5);  // base direita
-    glVertex2f(0.0, 0.4); // base esquerda
-    glVertex2f(0.0, 0.5);  // base direita
-    glVertex2f(-0.4, 0.4); // base esquerda
+    glVertex2f(0.0, 0.4);   // base esquerda
+    glVertex2f(0.0, 0.5);   // base direita
+    glVertex2f(-0.4, 0.4);  // base esquerda
     glVertex2f(-0.4, 0.5);  // base direita
     glVertex2f(-0.20, 0.4); // base esquerda
-    glVertex2f(-0.20, 0.5);  // base direita
+    glVertex2f(-0.20, 0.5); // base direita
     glVertex2f(-0.15, 0.4); // base esquerda
-    glVertex2f(-0.15, 0.5);  // base direita
+    glVertex2f(-0.15, 0.5); // base direita
     glVertex2f(-0.10, 0.4); // base esquerda
-    glVertex2f(-0.10, 0.5);  // base direita
+    glVertex2f(-0.10, 0.5); // base direita
     glVertex2f(-0.05, 0.4); // base esquerda
-    glVertex2f(-0.05, 0.5);  // base direita
+    glVertex2f(-0.05, 0.5); // base direita
     glVertex2f(-0.25, 0.4); // base esquerda
-    glVertex2f(-0.25, 0.5);  // base direita
+    glVertex2f(-0.25, 0.5); // base direita
     glVertex2f(-0.30, 0.4); // base esquerda
-    glVertex2f(-0.30, 0.5);  // base direita
+    glVertex2f(-0.30, 0.5); // base direita
     glVertex2f(-0.35, 0.4); // base esquerda
-    glVertex2f(-0.35, 0.5);  // base direita
+    glVertex2f(-0.35, 0.5); // base direita
     glEnd();
     break;
   case 5:
-   glColor3f(0.0, 0.0, 0.0);
+    glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINES);
-    
-    glVertex2f(0.0, 0.4); 
-    glVertex2f(0.0, 0.7); 
-    glVertex2f(0.0, 0.4);  
-    glVertex2f(-0.25, 0.7);  
-    glVertex2f(0.0, 0.4);  
+
+    glVertex2f(0.0, 0.4);
+    glVertex2f(0.0, 0.7);
+    glVertex2f(0.0, 0.4);
+    glVertex2f(-0.25, 0.7);
+    glVertex2f(0.0, 0.4);
     glVertex2f(0.25, 0.7);
 
-    glVertex2f(0.0, 0.4);  
-    glVertex2f(-0.25, 0.5); 
-    glVertex2f(0.0, 0.4);  
-    glVertex2f(0.25, 0.5);  
+    glVertex2f(0.0, 0.4);
+    glVertex2f(-0.25, 0.5);
+    glVertex2f(0.0, 0.4);
+    glVertex2f(0.25, 0.5);
     glEnd();
     break;
   case 6:
@@ -203,24 +177,88 @@ void desenharOlhos(int opcao)
   // Implemente conforme necessário
   switch (opcao)
   {
-    case 1:
-    glColor3f(1.0, 1.0, 1.0);
+  case 1:
+    glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINE_LOOP);
-      glVertex2f(-0.05, 0.2); // inferior esquerdo
-      glVertex2f(-0.1, 0.25);  // inferior direito
-      glVertex2f(-0.2, 0.25);  // inferior direito
-      glVertex2f(-0.25, 0.2);  // inferior direito
-      glVertex2f(-0.2, 0.15);  // superior esquerdo
-      glVertex2f(-0.1, 0.15);  // inferior direito
-      glEnd();
-       glBegin(GL_LINE_LOOP);
-      glVertex2f(0.05, 0.2); // inferior esquerdo
-      glVertex2f(0.1, 0.25);  // inferior direito
-      glVertex2f(0.2, 0.25);  // inferior direito
-      glVertex2f(0.25, 0.2);  // inferior direito
-      glVertex2f(0.2, 0.15);  // superior esquerdo
-      glVertex2f(0.1, 0.15);  // inferior direito
-      glEnd();
+    glVertex2f(-0.05, 0.2); // inferior esquerdo
+    glVertex2f(-0.1, 0.25); // inferior direito
+    glVertex2f(-0.2, 0.25); // inferior direito
+    glVertex2f(-0.25, 0.2); // inferior direito
+    glVertex2f(-0.2, 0.15); // superior esquerdo
+    glVertex2f(-0.1, 0.15); // inferior direito
+    glEnd();
+    glPushMatrix();
+    glTranslatef(-0.15, 0.20, 0.0);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 360; i++)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.05 * cos(angle), 0.05 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
+    glBegin(GL_LINES);
+    glVertex2f(-0.15, 0.30);
+    glVertex2f(-0.15, 0.25);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2f(-0.15, 0.15);
+    glVertex2f(-0.15, 0.10);
+    glEnd();
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(0.05, 0.2); // inferior esquerdo
+    glVertex2f(0.1, 0.25); // inferior direito
+    glVertex2f(0.2, 0.25); // inferior direito
+    glVertex2f(0.25, 0.2); // inferior direito
+    glVertex2f(0.2, 0.15); // superior esquerdo
+    glVertex2f(0.1, 0.15); // inferior direito
+    glEnd();
+    glPushMatrix();
+    glTranslatef(0.15, 0.20, 0.0);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 360; i++)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.05 * cos(angle), 0.05 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
+    break;
+  case 2:
+    glColor3f(1.0, 1.0, 1.0);
+    glBegin(GL_LINES);
+    glVertex2f(-0.05, 0.2); // inferior esquerdo
+    glVertex2f(-0.25, 0.2); // inferior direito
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2f(0.05, 0.2); // inferior esquerdo
+    glVertex2f(0.25, 0.2); // inferior direito
+    glEnd();
+    break;
+  case 3:
+    glColor3f(0.0, 0.0, 0.0);
+    glPushMatrix();
+    glTranslatef(0.15, 0.20, 0.0);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 360; i++)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.05 * cos(angle), 0.05 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
+
+    glColor3f(0.0, 0.0, 0.0);
+    glPushMatrix();
+    glTranslatef(-0.15, 0.20, 0.0);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 360; i++)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.05 * cos(angle), 0.05 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
     break;
   }
 }
@@ -232,6 +270,42 @@ void desenharBoca(char opcao)
 
 void desenharSobrancelha(char opcao)
 {
+  switch (opcao)
+  {
+  case 1:
+    glColor3f(0.0, 0.0, 0.0);
+    glPushMatrix();
+    glTranslatef(-0.15, 0.25, 0.0);
+    glLineWidth(10.0);
+    glBegin(GL_LINES);
+    float comAnglo = 30.0;  // Ângulo inicial do arco
+    float fimAnglo = 150.0; // Ângulo final do arco
+    for (float i = comAnglo; i <= fimAnglo; i += 1.0)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.10 * cos(angle), 0.05 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
+
+    glColor3f(0.0, 0.0, 0.0);
+    glPushMatrix();
+    glTranslatef(0.15, 0.25, 0.0);
+    glBegin(GL_LINES);
+    comAnglo = 30.0;  // Ângulo inicial do arco
+    fimAnglo = 150.0; // Ângulo final do arco
+    for (float i = comAnglo; i <= fimAnglo; i += 1.0)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.10 * cos(angle), 0.05 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
+    glLineWidth(1.0);
+    break;
+  default:
+    break;
+  }
   // Implemente conforme necessário
 }
 
@@ -261,29 +335,112 @@ void keyboard(unsigned char key, int x, int y)
 {
   printf("*** Tratamento de teclas comuns\n");
   printf(">>> Tecla pressionada: %c\n", key);
+
+  //if (key >= 49 && key <= 54) {
+    //olhos = key - 49 + 1;
+  //}
   switch (key)
   {
-    case 49:
+  case 49:
     olhos = 1;
     glutPostRedisplay();
     break;
-    case 50:
+  case 50:
+    olhos = 2;
     glutPostRedisplay();
     break;
-    case 51:
+  case 51:
+    olhos = 3;
     glutPostRedisplay();
     break;
-    case 52:
+  case 52:
+    olhos = 4;
     glutPostRedisplay();
     break;
-    case 53:
+  case 53:
+    olhos = 5;
     glutPostRedisplay();
     break;
-    case 54:
+  case 54:
+    olhos = 6;
     glutPostRedisplay();
     break;
-    // Continue para outras teclas específicas
+  // sombr:
+  case 97:
+    sobrancelha = 1;
+    glutPostRedisplay();
+    break;
+  case 115:
+    sobrancelha = 2;
+    glutPostRedisplay();
+    break;
+  case 100:
+    sobrancelha = 3;
+    glutPostRedisplay();
+    break;
+  case 102:
+    sobrancelha = 4;
+    glutPostRedisplay();
+    break;
+  case 103:
+    sobrancelha = 5;
+    glutPostRedisplay();
+    break;
+  case 104:
+    sobrancelha = 6;
+    glutPostRedisplay();
+    break;
+  //boca
+    case 113:
+    boca = 1;
+    glutPostRedisplay();
+  break;
+  case 119:
+    boca = 2;
+    glutPostRedisplay();
+  break;
+  case 101:
+    boca = 3;
+    glutPostRedisplay();
+  break;
+  case 114:
+    boca = 4;
+    glutPostRedisplay();
+  break;
+  case 116:
+    boca = 5;
+    glutPostRedisplay();
+  break;
+  case 121:
+    boca = 6;
+    glutPostRedisplay();
+  break;
+  case 112:
+    nariz = 1;
+    glutPostRedisplay();
+  break;
+  case 120:
+    nariz = 2;
+    glutPostRedisplay();
+  break;
+  case 99:
+    nariz = 3;
+    glutPostRedisplay();
+  break;
+  case 118:
+    nariz = 4;
+    glutPostRedisplay();
+  break;
+  case 98:
+    nariz = 5;
+    glutPostRedisplay();
+  break;
+  case 110:
+    nariz = 6;
+    glutPostRedisplay();
+  break;
   }
+
 }
 void Special_keyboard(GLint tecla, int x, int y)
 {
