@@ -94,9 +94,6 @@ void desenharContornoFacial(int opcao)
     break;
   case 6:
     break;
-  default:
-    
-    break;
   }
 }
 
