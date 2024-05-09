@@ -185,6 +185,29 @@ void desenharCabelos(int opcao)
 
     break;
   case 3:
+  glColor3f(0.0, 0.0, 0.0);
+    glPushMatrix();
+    glTranslatef(0.0, 0.2, 0.0);
+    glBegin(GL_POLYGON);
+    float comAnglo = 30.0;  // Ângulo inicial do arco
+    float fimAnglo = 150.0; // Ângulo final do arco
+    for (float i = comAnglo; i <= fimAnglo; i += 1.0)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.47 * cos(angle), 0.40 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(0.0, 0.6, 0.0);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 360; i++)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.15 * cos(angle), 0.15 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
     break;
   case 4:
     glColor3f(0.0, 0.0, 0.0);
@@ -353,14 +376,67 @@ void desenharBoca(char opcao)
   switch (opcao)
   {
   case 1:
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINES);
+    glVertex2f(-0.1, -0.2);
+    glVertex2f(0.0, -0.2541144);
+    glEnd();
+
     break;
   case 2:
+  glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINES);
+    glVertex2f(-0.1, -0.2);
+    glVertex2f(0.0, -0.2541144);
+    glVertex2f(0.1, -0.2);
+    glVertex2f(0.0, -0.2541144);
+    glEnd();
     break;
   case 3:
+  glColor3f(0.0, 0.0, 0.0);
+  glPushMatrix();
+    glTranslatef(0.0, -0.0541144, 0.0);
+    glBegin(GL_POLYGON);
+    float comAnglo = 330.0; // Ângulo inicial do arco
+    float fimAnglo = 210.0; // Ângulo final do arco
+    for (float i = comAnglo; i >= fimAnglo; i -= 1.0)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.1 * cos(angle), 0.20 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
     break;
   case 4:
+  glColor3f(0.0, 0.0, 0.0);
+    glPushMatrix();
+    glTranslatef(0.0, -0.31144, 0.0);
+    glBegin(GL_POLYGON);
+    comAnglo = 30.0;  // Ângulo inicial do arco
+    fimAnglo = 150.0; // Ângulo final do arco
+    for (float i = comAnglo; i <= fimAnglo; i += 1.0)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.1 * cos(angle), 0.20 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
     break;
   case 5:
+    glColor3f(1.0, 0.0, 0.0);
+    glBegin(GL_POLYGON);
+    glVertex2f(-0.1, -0.2);
+    glVertex2f(0.0, -0.2541144);
+    glVertex2f(0.1, -0.2);
+    glVertex2f(0.0, -0.1437541);
+    glEnd();
+    glColor3f(1.0, 1.0, 1.0);
+    glBegin(GL_LINES);
+    glVertex2f(-0.1, -0.2);
+    glVertex2f(0.1, -0.2);
+    glEnd();
+
+    
     break;
   case 6:
     break;
