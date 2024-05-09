@@ -185,7 +185,7 @@ void desenharCabelos(int opcao)
 
     break;
   case 3:
-  glColor3f(0.0, 0.0, 0.0);
+    glColor3f(0.0, 0.0, 0.0);
     glPushMatrix();
     glTranslatef(0.0, 0.2, 0.0);
     glBegin(GL_POLYGON);
@@ -254,14 +254,12 @@ void desenharCabelos(int opcao)
   case 5:
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINES);
-
     glVertex2f(0.0, 0.4);
     glVertex2f(0.0, 0.7);
     glVertex2f(0.0, 0.4);
     glVertex2f(-0.25, 0.7);
     glVertex2f(0.0, 0.4);
     glVertex2f(0.25, 0.7);
-
     glVertex2f(0.0, 0.4);
     glVertex2f(-0.25, 0.5);
     glVertex2f(0.0, 0.4);
@@ -269,6 +267,7 @@ void desenharCabelos(int opcao)
     glEnd();
     break;
   case 6:
+
     break;
     // Continue para as outras opções de cabelo
   }
@@ -288,6 +287,11 @@ void desenharOlhos(int opcao)
     glVertex2f(-0.25, 0.2); // inferior direito
     glVertex2f(-0.2, 0.15); // superior esquerdo
     glVertex2f(-0.1, 0.15); // inferior direito
+    glEnd();
+
+    glBegin(GL_LINES);
+    glVertex2f(-0.05, 0.2);
+    glVertex2f(0.0, 0.2);
     glEnd();
     glPushMatrix();
     glTranslatef(-0.15, 0.20, 0.0);
@@ -314,6 +318,10 @@ void desenharOlhos(int opcao)
     glVertex2f(0.25, 0.2); // inferior direito
     glVertex2f(0.2, 0.15); // superior esquerdo
     glVertex2f(0.1, 0.15); // inferior direito
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2f(0.0, 0.2);
+    glVertex2f(0.05, 0.2);
     glEnd();
     glPushMatrix();
     glTranslatef(0.15, 0.20, 0.0);
@@ -384,7 +392,7 @@ void desenharBoca(char opcao)
 
     break;
   case 2:
-  glColor3f(0.0, 0.0, 0.0);
+    glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINES);
     glVertex2f(-0.1, -0.2);
     glVertex2f(0.0, -0.2541144);
@@ -393,8 +401,8 @@ void desenharBoca(char opcao)
     glEnd();
     break;
   case 3:
-  glColor3f(0.0, 0.0, 0.0);
-  glPushMatrix();
+    glColor3f(0.0, 0.0, 0.0);
+    glPushMatrix();
     glTranslatef(0.0, -0.0541144, 0.0);
     glBegin(GL_POLYGON);
     float comAnglo = 330.0; // Ângulo inicial do arco
@@ -408,7 +416,7 @@ void desenharBoca(char opcao)
     glPopMatrix();
     break;
   case 4:
-  glColor3f(0.0, 0.0, 0.0);
+    glColor3f(0.0, 0.0, 0.0);
     glPushMatrix();
     glTranslatef(0.0, -0.31144, 0.0);
     glBegin(GL_POLYGON);
@@ -435,10 +443,17 @@ void desenharBoca(char opcao)
     glVertex2f(-0.1, -0.2);
     glVertex2f(0.1, -0.2);
     glEnd();
-
-    
     break;
   case 6:
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINES);
+    glVertex2f(0.1409144371604, -0.13804264515157);
+    glVertex2f(0.1, -0.2);
+    glVertex2f(-0.13860815329518, -0.14215327148179);
+    glVertex2f(-0.1, -0.2);
+    glVertex2f(0.1, -0.2);
+    glVertex2f(-0.1, -0.2);
+    glEnd();
     break;
   }
 }
@@ -479,14 +494,81 @@ void desenharSobrancelha(char opcao)
     glLineWidth(1.0);
     break;
   case 2:
+    glColor3f(0.0, 0.0, 0.0);
+    glLineWidth(2.0);
+    glBegin(GL_LINES);
+    glVertex2f(-0.21847716410846, 0.29973905901783);
+    glVertex2f(-0.1, 0.3);
+    glVertex2f(-0.1, 0.3);
+    glVertex2f(-0.03981610049201, 0.26356554731182);
+    glEnd();
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINES);
+    glVertex2f(0.21847716410846, 0.29973905901783);
+    glVertex2f(0.1, 0.3);
+    glVertex2f(0.1, 0.3);
+    glVertex2f(0.03981610049201, 0.26356554731182);
+    glEnd();
+    glLineWidth(1.0);
     break;
   case 3:
+    glColor3f(0.0, 0.0, 0.0);
+    glLineWidth(2.0);
+    glBegin(GL_LINES);
+    glVertex2f(-0.20232866009286, 0.32476924024201);
+    glVertex2f(-0.05, 0.25);
+    glEnd();
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINES);
+    glVertex2f(0.20232866009286, 0.32476924024201);
+    glVertex2f(0.05, 0.25);
+    glEnd();
+    glLineWidth(1.0);
     break;
   case 4:
+    glColor3f(0.0, 0.0, 0.0);
+    glLineWidth(3.0);
+    glBegin(GL_LINES);
+    glVertex2f(-0.25, 0.3);
+    glVertex2f(-0.05, 0.3);
+    glEnd();
+    glColor3f(0.0, 0.0, 0.0);
+    glLineWidth(3.0);
+    glBegin(GL_LINES);
+    glVertex2f(0.25, 0.3);
+    glVertex2f(0.05, 0.3);
+    glEnd();
+    glLineWidth(1.0);
     break;
   case 5:
+    glColor3f(0.0, 0.0, 0.0);
+    glLineWidth(3.0);
+    glBegin(GL_LINES);
+    glVertex2f(-0.25, 0.3);
+    glVertex2f(-0.0, 0.3);
+    glEnd();
+    glColor3f(0.0, 0.0, 0.0);
+    glLineWidth(3.0);
+    glBegin(GL_LINES);
+    glVertex2f(0.25, 0.3);
+    glVertex2f(0.0, 0.3);
+    glEnd();
+    glLineWidth(1.0);
     break;
   case 6:
+  glColor3f(0.0, 0.0, 0.0);
+    glLineWidth(3.0);
+    glBegin(GL_LINES);
+    glVertex2f(-0.25, 0.3);
+    glVertex2f(-0.05, 0.3);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2f(0.04069400221164,0.25871513727581);
+    glVertex2f(0.13821313073372,0.33914328451052);
+    glVertex2f(0.13821313073372,0.33914328451052);
+    glVertex2f(0.26086605526665,0.34115398819139);
+    glEnd();
+    glLineWidth(1.0);
     break;
   }
   // Implemente conforme necessário
