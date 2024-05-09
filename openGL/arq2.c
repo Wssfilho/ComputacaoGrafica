@@ -267,7 +267,25 @@ void desenharCabelos(int opcao)
     glEnd();
     break;
   case 6:
-
+  glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_POLYGON);
+    glVertex2f(0.0, 0.4);
+    glVertex2f(-0.4, 0.4);  // inferior esquerdo
+    glVertex2f(-0.4, 0.5);  // inferior direito
+    glVertex2f(-0.299114919855,0.5613260412464);
+    glVertex2f(-0.2, 0.5);  // inferior direito
+    glVertex2f(-0.09904990360866,0.56233139308683);
+    glVertex2f(0.0, 0.5);   // inferior direito]
+    glEnd();
+    glBegin(GL_POLYGON);
+    glVertex2f(0.0, 0.4);  // inferior esquerdo
+    glVertex2f(0.4, 0.4);  // inferior esquerdo
+    glVertex2f(0.4, 0.5);  // inferior direito
+    glVertex2f(0.299114919855,0.5613260412464);
+    glVertex2f(0.2, 0.5);  // inferior direito
+    glVertex2f(0.09904990360866,0.56233139308683);
+    glVertex2f(0.0, 0.5);   // inferior direito]
+    glEnd();
     break;
     // Continue para as outras opções de cabelo
   }
