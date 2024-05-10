@@ -36,25 +36,30 @@ int main(int argc, char **argv)
   glutMainLoop();
   return 0;
 }
-void DesenhaTexto(char *string) {
-    glColor3ub(0,0,0);
-    glPushMatrix();
-    // Posição inicial no universo onde o texto será colocado
-    float x = -0.8;
-    float y = -0.45 ;
-    glRasterPos2f(x, y);
-    // Exibe caracter a caracter
-    while (*string) {
-        if (*string == '\n') {
-            // Se encontrou uma quebra de linha, ajusta a posição
-            y -= 0.1; // Ajuste para a próxima linha
-            glRasterPos2f(x, y); // Define a nova posição de rasterização
-        } else {
-            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *string);
-        }
-        string++; // Avança para o próximo caractere na string
+void DesenhaTexto(char *string)
+{
+  glColor3ub(0, 0, 0);
+  glPushMatrix();
+  // Posição inicial no universo onde o texto será colocado
+  float x = -0.8;
+  float y = -0.45;
+  glRasterPos2f(x, y);
+  // Exibe caracter a caracter
+  while (*string)
+  {
+    if (*string == '\n')
+    {
+      // Se encontrou uma quebra de linha, ajusta a posição
+      y -= 0.1;            // Ajuste para a próxima linha
+      glRasterPos2f(x, y); // Define a nova posição de rasterização
     }
-    glPopMatrix();
+    else
+    {
+      glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *string);
+    }
+    string++; // Avança para o próximo caractere na string
+  }
+  glPopMatrix();
 }
 
 void desenharContornoFacial(int opcao)
@@ -287,24 +292,24 @@ void desenharCabelos(int opcao)
     glEnd();
     break;
   case 6:
-  glColor3f(0.0, 0.0, 0.0);
+    glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_POLYGON);
     glVertex2f(0.0, 0.4);
-    glVertex2f(-0.4, 0.4);  // inferior esquerdo
-    glVertex2f(-0.4, 0.5);  // inferior direito
-    glVertex2f(-0.299114919855,0.5613260412464);
-    glVertex2f(-0.2, 0.5);  // inferior direito
-    glVertex2f(-0.09904990360866,0.56233139308683);
-    glVertex2f(0.0, 0.5);   // inferior direito]
+    glVertex2f(-0.4, 0.4); // inferior esquerdo
+    glVertex2f(-0.4, 0.5); // inferior direito
+    glVertex2f(-0.299114919855, 0.5613260412464);
+    glVertex2f(-0.2, 0.5); // inferior direito
+    glVertex2f(-0.09904990360866, 0.56233139308683);
+    glVertex2f(0.0, 0.5); // inferior direito]
     glEnd();
     glBegin(GL_POLYGON);
-    glVertex2f(0.0, 0.4);  // inferior esquerdo
-    glVertex2f(0.4, 0.4);  // inferior esquerdo
-    glVertex2f(0.4, 0.5);  // inferior direito
-    glVertex2f(0.299114919855,0.5613260412464);
-    glVertex2f(0.2, 0.5);  // inferior direito
-    glVertex2f(0.09904990360866,0.56233139308683);
-    glVertex2f(0.0, 0.5);   // inferior direito]
+    glVertex2f(0.0, 0.4); // inferior esquerdo
+    glVertex2f(0.4, 0.4); // inferior esquerdo
+    glVertex2f(0.4, 0.5); // inferior direito
+    glVertex2f(0.299114919855, 0.5613260412464);
+    glVertex2f(0.2, 0.5); // inferior direito
+    glVertex2f(0.09904990360866, 0.56233139308683);
+    glVertex2f(0.0, 0.5); // inferior direito]
     glEnd();
     break;
     // Continue para as outras opções de cabelo
@@ -409,8 +414,97 @@ void desenharOlhos(int opcao)
     glPopMatrix();
     break;
   case 4:
+    glColor3f(1.0, 1.0, 1.0);
+    glPushMatrix();
+    glTranslatef(-0.15, 0.3, 0.0);
+    glBegin(GL_POLYGON);
+    float comAnglo = 330.0; // Ângulo inicial do arco
+    float fimAnglo = 210.0; // Ângulo final do arco
+    for (float i = comAnglo; i >= fimAnglo; i -= 1.0)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.1 * cos(angle), 0.10 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(0.15, 0.3, 0.0);
+    glBegin(GL_POLYGON);
+    comAnglo = 330.0; // Ângulo inicial do arco
+    fimAnglo = 210.0; // Ângulo final do arco
+    for (float i = comAnglo; i >= fimAnglo; i -= 1.0)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.1 * cos(angle), 0.10 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
+
+    glPushMatrix();
+    glColor3f(0.0, 0.0, 0.0);
+    glTranslatef(-0.15, 0.225, 0.0);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 360; i++)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.025 * cos(angle), 0.025 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
+    glPushMatrix();
+    glColor3f(0.0, 0.0, 0.0);
+    glTranslatef(0.15, 0.225, 0.0);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 360; i++)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.025 * cos(angle), 0.025 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
+
     break;
   case 5:
+    glColor3f(1.0, 1.0, 1.0);
+    glPushMatrix();
+    glTranslatef(-0.15, 0.3, 0.0);
+    glBegin(GL_POLYGON);
+    comAnglo = 330.0; // Ângulo inicial do arco
+    fimAnglo = 210.0; // Ângulo final do arco
+    for (float i = comAnglo; i >= fimAnglo; i -= 1.0)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.1 * cos(angle), 0.10 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
+    glPushMatrix();
+    glColor3f(0.0, 0.0, 0.0);
+    glTranslatef(-0.15, 0.225, 0.0);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 360; i++)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.025 * cos(angle), 0.025 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
+    glBegin(GL_LINES);
+    glVertex2f(0.15, 0.30);
+    glVertex2f(0.15, 0.25);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2f(0.15, 0.15);
+    glVertex2f(0.15, 0.10);
+    glEnd();
+    glBegin(GL_POLYGON);
+    glVertex2f(0.05, 0.2); // inferior esquerdo
+    glVertex2f(0.1, 0.25); // inferior direito
+    glVertex2f(0.2, 0.25); // inferior direito
+    glVertex2f(0.25, 0.2); // inferior direito
+    glVertex2f(0.2, 0.15); // superior esquerdo
+    glVertex2f(0.1, 0.15); // inferior direito
+    glEnd();
     break;
   case 6:
     break;
@@ -594,17 +688,17 @@ void desenharSobrancelha(char opcao)
     glLineWidth(1.0);
     break;
   case 6:
-  glColor3f(0.0, 0.0, 0.0);
+    glColor3f(0.0, 0.0, 0.0);
     glLineWidth(3.0);
     glBegin(GL_LINES);
     glVertex2f(-0.25, 0.3);
     glVertex2f(-0.05, 0.3);
     glEnd();
     glBegin(GL_LINES);
-    glVertex2f(0.04069400221164,0.25871513727581);
-    glVertex2f(0.13821313073372,0.33914328451052);
-    glVertex2f(0.13821313073372,0.33914328451052);
-    glVertex2f(0.26086605526665,0.34115398819139);
+    glVertex2f(0.04069400221164, 0.25871513727581);
+    glVertex2f(0.13821313073372, 0.33914328451052);
+    glVertex2f(0.13821313073372, 0.33914328451052);
+    glVertex2f(0.26086605526665, 0.34115398819139);
     glEnd();
     glLineWidth(1.0);
     break;
@@ -617,56 +711,56 @@ void desenharNariz(char opcao)
   switch (opcao)
   {
   case 1:
-  glColor3f(0.0, 0.0, 0.0);
-  glBegin(GL_LINES);
-  glVertex2f(0.0, 0.1);
-  glVertex2f(0.0, -0.04);
-  glEnd();
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINES);
+    glVertex2f(0.0, 0.1);
+    glVertex2f(0.0, -0.04);
+    glEnd();
     break;
   case 2:
-   glColor3f(0.0, 0.0, 0.0);
-  glBegin(GL_LINES);
-  glVertex2f(0.0, 0.1);
-  glVertex2f(0.0, -0.04);
-  glVertex2f(0.05979568717988,-0.1012008215995);
-  glVertex2f(0.0, -0.04);
-  glVertex2f(0.05979568717988,-0.1012008215995);
-  glVertex2f(-0.0,-0.1);
-  glEnd();
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINES);
+    glVertex2f(0.0, 0.1);
+    glVertex2f(0.0, -0.04);
+    glVertex2f(0.05979568717988, -0.1012008215995);
+    glVertex2f(0.0, -0.04);
+    glVertex2f(0.05979568717988, -0.1012008215995);
+    glVertex2f(-0.0, -0.1);
+    glEnd();
     break;
   case 3:
-   glColor3f(0.0, 0.0, 0.0);
-  glBegin(GL_LINES);
-  glVertex2f(-0.02063246005482,-0.07606702558866);
-  glVertex2f(-0.06687864471478,-0.00267634123699);
-  glVertex2f(0.02063246005482,-0.07606702558866);
-  glVertex2f(0.06687864471478,-0.00267634123699);
-  glEnd();
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINES);
+    glVertex2f(-0.02063246005482, -0.07606702558866);
+    glVertex2f(-0.06687864471478, -0.00267634123699);
+    glVertex2f(0.02063246005482, -0.07606702558866);
+    glVertex2f(0.06687864471478, -0.00267634123699);
+    glEnd();
     break;
   case 4:
-   glColor3f(0.0, 0.0, 0.0);
-  glBegin(GL_LINES);
-  glVertex2f(0.0, 0.02);
-  glVertex2f(0.07688666846726,-0.04087971117347);
-  glVertex2f(-0.0,-0.1);
-  glVertex2f(0.07688666846726,-0.04087971117347);
-  glEnd();
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINES);
+    glVertex2f(0.0, 0.02);
+    glVertex2f(0.07688666846726, -0.04087971117347);
+    glVertex2f(-0.0, -0.1);
+    glVertex2f(0.07688666846726, -0.04087971117347);
+    glEnd();
     break;
   case 5:
-   glColor3f(0.0, 0.0, 0.0);
-  glBegin(GL_LINES);
-  glVertex2f(-0.020,0.021);
-  glVertex2f(-0.05984118183174,-0.03786365565217);
-  glVertex2f(-0.04174484870393,-0.05897604430128);
-  glVertex2f(0.0,-0.1);
-  glVertex2f(0.020,0.021);
-  glVertex2f(0.05984118183174,-0.03786365565217);
-  glVertex2f(0.04174484870393,-0.05897604430128);
-  glVertex2f(0.0,-0.1);
-  glEnd();
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINES);
+    glVertex2f(-0.020, 0.021);
+    glVertex2f(-0.05984118183174, -0.03786365565217);
+    glVertex2f(-0.04174484870393, -0.05897604430128);
+    glVertex2f(0.0, -0.1);
+    glVertex2f(0.020, 0.021);
+    glVertex2f(0.05984118183174, -0.03786365565217);
+    glVertex2f(0.04174484870393, -0.05897604430128);
+    glVertex2f(0.0, -0.1);
+    glEnd();
     break;
   case 6:
-   glPushMatrix();
+    glPushMatrix();
     glTranslatef(-0.05, -0.04, 0.0);
     glBegin(GL_POLYGON);
     for (int i = 0; i < 360; i++)
