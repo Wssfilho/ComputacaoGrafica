@@ -443,7 +443,7 @@ void desenharBoca(char opcao)
     for (float i = comAnglo; i <= fimAnglo; i += 1.0)
     {
       float angle = i * 3.14159 / 180;
-      glVertex2f(0.1 * cos(angle), 0.20 * sin(angle));
+      glVertex2f(0.1 * cos(angle), 0.15 * sin(angle));
     }
     glEnd();
     glPopMatrix();
@@ -597,16 +597,75 @@ void desenharNariz(char opcao)
   switch (opcao)
   {
   case 1:
+  glColor3f(0.0, 0.0, 0.0);
+  glBegin(GL_LINES);
+  glVertex2f(0.0, 0.1);
+  glVertex2f(0.0, -0.04);
+  glEnd();
     break;
   case 2:
+   glColor3f(0.0, 0.0, 0.0);
+  glBegin(GL_LINES);
+  glVertex2f(0.0, 0.1);
+  glVertex2f(0.0, -0.04);
+  glVertex2f(0.05979568717988,-0.1012008215995);
+  glVertex2f(0.0, -0.04);
+  glVertex2f(0.05979568717988,-0.1012008215995);
+  glVertex2f(-0.0,-0.1);
+  glEnd();
     break;
   case 3:
+   glColor3f(0.0, 0.0, 0.0);
+  glBegin(GL_LINES);
+  glVertex2f(-0.02063246005482,-0.07606702558866);
+  glVertex2f(-0.06687864471478,-0.00267634123699);
+  glVertex2f(0.02063246005482,-0.07606702558866);
+  glVertex2f(0.06687864471478,-0.00267634123699);
+  glEnd();
     break;
   case 4:
+   glColor3f(0.0, 0.0, 0.0);
+  glBegin(GL_LINES);
+  glVertex2f(0.0, 0.02);
+  glVertex2f(0.07688666846726,-0.04087971117347);
+  glVertex2f(-0.0,-0.1);
+  glVertex2f(0.07688666846726,-0.04087971117347);
+  glEnd();
     break;
   case 5:
+   glColor3f(0.0, 0.0, 0.0);
+  glBegin(GL_LINES);
+  glVertex2f(-0.020,0.021);
+  glVertex2f(-0.05984118183174,-0.03786365565217);
+  glVertex2f(-0.04174484870393,-0.05897604430128);
+  glVertex2f(0.0,-0.1);
+  glVertex2f(0.020,0.021);
+  glVertex2f(0.05984118183174,-0.03786365565217);
+  glVertex2f(0.04174484870393,-0.05897604430128);
+  glVertex2f(0.0,-0.1);
+  glEnd();
     break;
   case 6:
+   glPushMatrix();
+    glTranslatef(-0.05, -0.04, 0.0);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 360; i++)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.01 * cos(angle), 0.01 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(0.05, -0.04, 0.0);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 360; i++)
+    {
+      float angle = i * 3.14159 / 180;
+      glVertex2f(0.01 * cos(angle), 0.01 * sin(angle));
+    }
+    glEnd();
+    glPopMatrix();
     break;
   }
 }
