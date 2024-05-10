@@ -10,7 +10,7 @@ int olhos = 1;
 char boca = 1;
 char sobrancelha = 1;
 char nariz = 1;
-
+void DesenhaTexto(char *string);
 void desenharContornoFacial(int opcao);
 void desenharCabelos(int opcao);
 void desenharOlhos(int opcao);
@@ -35,6 +35,26 @@ int main(int argc, char **argv)
   glutSpecialFunc(Special_keyboard);
   glutMainLoop();
   return 0;
+}
+void DesenhaTexto(char *string) {
+    glColor3ub(0,0,0);
+    glPushMatrix();
+    // Posição inicial no universo onde o texto será colocado
+    float x = -0.8;
+    float y = -0.45 ;
+    glRasterPos2f(x, y);
+    // Exibe caracter a caracter
+    while (*string) {
+        if (*string == '\n') {
+            // Se encontrou uma quebra de linha, ajusta a posição
+            y -= 0.1; // Ajuste para a próxima linha
+            glRasterPos2f(x, y); // Define a nova posição de rasterização
+        } else {
+            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *string);
+        }
+        string++; // Avança para o próximo caractere na string
+    }
+    glPopMatrix();
 }
 
 void desenharContornoFacial(int opcao)
@@ -672,6 +692,7 @@ void desenharNariz(char opcao)
 void display(void)
 {
   glClear(GL_COLOR_BUFFER_BIT);
+  DesenhaTexto("Contorno facial: F1...F6\n Cabelos: F7...F12\n Olhos: 1...6 \nBoca: q, w, e, r, t, y \nSombrancelha: a, s, d, f, g, h \nNariz: z, x, c, v, b, n");
   // Desenhar contorno facial primeiro
   desenharContornoFacial(contornoFacial);
   // Desenhar cabelos depois do contorno facial
@@ -689,9 +710,6 @@ void display(void)
 
 void keyboard(unsigned char key, int x, int y)
 {
-  printf("*** Tratamento de teclas comuns\n");
-  printf(">>> Tecla pressionada: %c\n", key);
-
   if (key >= 49 && key <= 54)
   {
     olhos = key - 49 + 1;
@@ -750,7 +768,7 @@ void keyboard(unsigned char key, int x, int y)
     boca = 6;
     glutPostRedisplay();
     break;
-  case 112:
+  case 122:
     nariz = 1;
     glutPostRedisplay();
     break;
