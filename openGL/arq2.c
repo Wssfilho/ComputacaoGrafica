@@ -566,7 +566,7 @@ void desenharBoca(char opcao)
     glEnd();
     break;
   case 3:
-    glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 1.0);
     glPushMatrix();
     glTranslatef(0.0, -0.0541144, 0.0);
     glBegin(GL_POLYGON);
