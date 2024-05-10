@@ -10,6 +10,11 @@ int olhos = 1;
 char boca = 1;
 char sobrancelha = 1;
 char nariz = 1;
+// Variáveis globais para os ângulos do arco
+float comAnglo = 0.0;
+float fimAnglo = 0.0;
+float angle = 0.0;
+
 void DesenhaTexto(char *string);
 void desenharContornoFacial(int opcao);
 void desenharCabelos(int opcao);
@@ -114,11 +119,11 @@ void desenharContornoFacial(int opcao)
     glPushMatrix();
     glTranslatef(0.0, -0.10, 0.0);
     glBegin(GL_POLYGON);
-    float comAnglo = 330.0; // Ângulo inicial do arco
-    float fimAnglo = 210.0; // Ângulo final do arco
+    comAnglo = 330.0; // Ângulo inicial do arco
+    fimAnglo = 210.0; // Ângulo final do arco
     for (float i = comAnglo; i >= fimAnglo; i -= 1.0)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.35 * cos(angle), 0.40 * sin(angle));
     }
     glEnd();
@@ -214,11 +219,11 @@ void desenharCabelos(int opcao)
     glPushMatrix();
     glTranslatef(0.0, 0.2, 0.0);
     glBegin(GL_POLYGON);
-    float comAnglo = 30.0;  // Ângulo inicial do arco
-    float fimAnglo = 150.0; // Ângulo final do arco
+    comAnglo = 30.0;  // Ângulo inicial do arco
+    fimAnglo = 150.0; // Ângulo final do arco
     for (float i = comAnglo; i <= fimAnglo; i += 1.0)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.47 * cos(angle), 0.40 * sin(angle));
     }
     glEnd();
@@ -228,7 +233,7 @@ void desenharCabelos(int opcao)
     glBegin(GL_POLYGON);
     for (int i = 0; i < 360; i++)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.15 * cos(angle), 0.15 * sin(angle));
     }
     glEnd();
@@ -341,7 +346,7 @@ void desenharOlhos(int opcao)
     glBegin(GL_POLYGON);
     for (int i = 0; i < 360; i++)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.05 * cos(angle), 0.05 * sin(angle));
     }
     glEnd();
@@ -371,7 +376,7 @@ void desenharOlhos(int opcao)
     glBegin(GL_POLYGON);
     for (int i = 0; i < 360; i++)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.05 * cos(angle), 0.05 * sin(angle));
     }
     glEnd();
@@ -395,7 +400,7 @@ void desenharOlhos(int opcao)
     glBegin(GL_POLYGON);
     for (int i = 0; i < 360; i++)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.05 * cos(angle), 0.05 * sin(angle));
     }
     glEnd();
@@ -407,7 +412,7 @@ void desenharOlhos(int opcao)
     glBegin(GL_POLYGON);
     for (int i = 0; i < 360; i++)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.05 * cos(angle), 0.05 * sin(angle));
     }
     glEnd();
@@ -418,11 +423,11 @@ void desenharOlhos(int opcao)
     glPushMatrix();
     glTranslatef(-0.15, 0.3, 0.0);
     glBegin(GL_POLYGON);
-    float comAnglo = 330.0; // Ângulo inicial do arco
-    float fimAnglo = 210.0; // Ângulo final do arco
+    comAnglo = 330.0; // Ângulo inicial do arco
+    fimAnglo = 210.0; // Ângulo final do arco
     for (float i = comAnglo; i >= fimAnglo; i -= 1.0)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.1 * cos(angle), 0.10 * sin(angle));
     }
     glEnd();
@@ -446,7 +451,7 @@ void desenharOlhos(int opcao)
     glBegin(GL_POLYGON);
     for (int i = 0; i < 360; i++)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.025 * cos(angle), 0.025 * sin(angle));
     }
     glEnd();
@@ -457,7 +462,7 @@ void desenharOlhos(int opcao)
     glBegin(GL_POLYGON);
     for (int i = 0; i < 360; i++)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.025 * cos(angle), 0.025 * sin(angle));
     }
     glEnd();
@@ -473,7 +478,7 @@ void desenharOlhos(int opcao)
     fimAnglo = 210.0; // Ângulo final do arco
     for (float i = comAnglo; i >= fimAnglo; i -= 1.0)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.1 * cos(angle), 0.10 * sin(angle));
     }
     glEnd();
@@ -484,7 +489,7 @@ void desenharOlhos(int opcao)
     glBegin(GL_POLYGON);
     for (int i = 0; i < 360; i++)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.025 * cos(angle), 0.025 * sin(angle));
     }
     glEnd();
@@ -507,38 +512,34 @@ void desenharOlhos(int opcao)
     glEnd();
     break;
   case 6:
-  glColor3f(1.0, 1.0, 1.0);
-  glBegin(GL_POLYGON);
-  glVertex2f(-0.25,0.25);
-  glVertex2f(-0.25,0.16);
-  glVertex2f(-0.04,0.16);
-  glVertex2f(-0.04,0.25);
-  glEnd();
-  glColor3f(0.0, 0.0, 0.5);
-  glBegin(GL_POLYGON);
-   glVertex2f(-0.15,0.25);
-  glVertex2f(-0.15,0.16);
-  glVertex2f(-0.04,0.16);
-  glVertex2f(-0.04,0.25);
-  glEnd();
-  glColor3f(1.0, 1.0, 1.0);
-  glBegin(GL_POLYGON);
-  glVertex2f(0.25,0.25);
-  glVertex2f(0.25,0.16);
-  glVertex2f(0.04,0.16);
-  glVertex2f(0.04,0.25);
-  glEnd();
-  glColor3f(0.0, 0.0, 0.5);
-  glBegin(GL_POLYGON);
-   glVertex2f(0.15,0.25);
-  glVertex2f(0.15,0.16);
-  glVertex2f(0.04,0.16);
-  glVertex2f(0.04,0.25);
-  glEnd();
- 
-
-
-
+    glColor3f(1.0, 1.0, 1.0);
+    glBegin(GL_POLYGON);
+    glVertex2f(-0.25, 0.25);
+    glVertex2f(-0.25, 0.16);
+    glVertex2f(-0.04, 0.16);
+    glVertex2f(-0.04, 0.25);
+    glEnd();
+    glColor3f(0.0, 0.0, 0.5);
+    glBegin(GL_POLYGON);
+    glVertex2f(-0.15, 0.25);
+    glVertex2f(-0.15, 0.16);
+    glVertex2f(-0.04, 0.16);
+    glVertex2f(-0.04, 0.25);
+    glEnd();
+    glColor3f(1.0, 1.0, 1.0);
+    glBegin(GL_POLYGON);
+    glVertex2f(0.25, 0.25);
+    glVertex2f(0.25, 0.16);
+    glVertex2f(0.04, 0.16);
+    glVertex2f(0.04, 0.25);
+    glEnd();
+    glColor3f(0.0, 0.0, 0.5);
+    glBegin(GL_POLYGON);
+    glVertex2f(0.15, 0.25);
+    glVertex2f(0.15, 0.16);
+    glVertex2f(0.04, 0.16);
+    glVertex2f(0.04, 0.25);
+    glEnd();
 
     break;
   }
@@ -570,11 +571,11 @@ void desenharBoca(char opcao)
     glPushMatrix();
     glTranslatef(0.0, -0.0541144, 0.0);
     glBegin(GL_POLYGON);
-    float comAnglo = 330.0; // Ângulo inicial do arco
-    float fimAnglo = 210.0; // Ângulo final do arco
+    comAnglo = 330.0; // Ângulo inicial do arco
+    fimAnglo = 210.0; // Ângulo final do arco
     for (float i = comAnglo; i >= fimAnglo; i -= 1.0)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.1 * cos(angle), 0.20 * sin(angle));
     }
     glEnd();
@@ -589,7 +590,7 @@ void desenharBoca(char opcao)
     fimAnglo = 150.0; // Ângulo final do arco
     for (float i = comAnglo; i <= fimAnglo; i += 1.0)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.1 * cos(angle), 0.15 * sin(angle));
     }
     glEnd();
@@ -633,11 +634,11 @@ void desenharSobrancelha(char opcao)
     glTranslatef(-0.15, 0.25, 0.0);
     glLineWidth(10.0);
     glBegin(GL_LINES);
-    float comAnglo = 30.0;  // Ângulo inicial do arco
-    float fimAnglo = 150.0; // Ângulo final do arco
+    comAnglo = 30.0;  // Ângulo inicial do arco
+    fimAnglo = 150.0; // Ângulo final do arco
     for (float i = comAnglo; i <= fimAnglo; i += 1.0)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.10 * cos(angle), 0.05 * sin(angle));
     }
     glEnd();
@@ -651,7 +652,7 @@ void desenharSobrancelha(char opcao)
     fimAnglo = 150.0; // Ângulo final do arco
     for (float i = comAnglo; i <= fimAnglo; i += 1.0)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.10 * cos(angle), 0.05 * sin(angle));
     }
     glEnd();
@@ -798,7 +799,7 @@ void desenharNariz(char opcao)
     glBegin(GL_POLYGON);
     for (int i = 0; i < 360; i++)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.01 * cos(angle), 0.01 * sin(angle));
     }
     glEnd();
@@ -808,7 +809,7 @@ void desenharNariz(char opcao)
     glBegin(GL_POLYGON);
     for (int i = 0; i < 360; i++)
     {
-      float angle = i * 3.14159 / 180;
+      angle = i * 3.14159 / 180;
       glVertex2f(0.01 * cos(angle), 0.01 * sin(angle));
     }
     glEnd();
