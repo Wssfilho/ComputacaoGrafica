@@ -507,6 +507,39 @@ void desenharOlhos(int opcao)
     glEnd();
     break;
   case 6:
+  glColor3f(1.0, 1.0, 1.0);
+  glBegin(GL_POLYGON);
+  glVertex2f(-0.25,0.25);
+  glVertex2f(-0.25,0.16);
+  glVertex2f(-0.04,0.16);
+  glVertex2f(-0.04,0.25);
+  glEnd();
+  glColor3f(0.0, 0.0, 0.5);
+  glBegin(GL_POLYGON);
+   glVertex2f(-0.15,0.25);
+  glVertex2f(-0.15,0.16);
+  glVertex2f(-0.04,0.16);
+  glVertex2f(-0.04,0.25);
+  glEnd();
+  glColor3f(1.0, 1.0, 1.0);
+  glBegin(GL_POLYGON);
+  glVertex2f(0.25,0.25);
+  glVertex2f(0.25,0.16);
+  glVertex2f(0.04,0.16);
+  glVertex2f(0.04,0.25);
+  glEnd();
+  glColor3f(0.0, 0.0, 0.5);
+  glBegin(GL_POLYGON);
+   glVertex2f(0.15,0.25);
+  glVertex2f(0.15,0.16);
+  glVertex2f(0.04,0.16);
+  glVertex2f(0.04,0.25);
+  glEnd();
+ 
+
+
+
+
     break;
   }
 }
