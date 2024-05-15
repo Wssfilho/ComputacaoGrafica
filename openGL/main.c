@@ -189,28 +189,7 @@ void rasterizarLinhaDDA(int x1, int y1, int x2, int y2)
   }
   glEnd();
 }
-
 void rasterizarLinhaPM(int x1, int y1, int x2, int y2)
-{
-  int dx = x2 - x1;
-  int dy = y2 - y1;
-  int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-  float xIncrement = (float)dx / (float)steps;
-  float yIncrement = (float)dy / (float)steps;
-  float x = (float)x1;
-  float y = (float)y1;
-
-  glBegin(GL_POINTS);
-  for (int i = 0; i <= steps; i++)
-  {
-    glVertex2i(round(x), round(y));
-    x += xIncrement;
-    y += yIncrement;
-  }
-  glEnd();
-}
-
-void rasterizeLinePM(int x1, int y1, int x2, int y2)
 {
   int dx = x2 - x1;
   int dy = y2 - y1;
@@ -224,7 +203,7 @@ void rasterizeLinePM(int x1, int y1, int x2, int y2)
     int incrE = 2 * abs(dy);
     int incrNE = 2 * (abs(dy) - abs(dx));
     glVertex2i(x, y);
-    while (x < x2)
+    while (x != x2)  // Modificação aqui
     {
       if (d <= 0)
       {
@@ -235,7 +214,7 @@ void rasterizeLinePM(int x1, int y1, int x2, int y2)
         d += incrNE;
         y += (dy >= 0 ? 1 : -1);
       }
-      x++;
+      x += (dx >= 0 ? 1 : -1);  // Modificação aqui
       glVertex2i(x, y);
     }
   }
@@ -245,7 +224,7 @@ void rasterizeLinePM(int x1, int y1, int x2, int y2)
     int incrE = 2 * abs(dx);
     int incrNE = 2 * (abs(dx) - abs(dy));
     glVertex2i(x, y);
-    while (y < y2)
+    while (y != y2)  // Modificação aqui
     {
       if (d <= 0)
       {
@@ -256,7 +235,7 @@ void rasterizeLinePM(int x1, int y1, int x2, int y2)
         d += incrNE;
         x += (dx >= 0 ? 1 : -1);
       }
-      y++;
+      y += (dy >= 0 ? 1 : -1);  // Modificação aqui
       glVertex2i(x, y);
     }
   }
