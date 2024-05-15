@@ -141,7 +141,7 @@ void displayPM(void) {
 void drawPolygonBoundary() {
   glLineWidth(1.0);
   glColor3f(0.0, 0.0, 0.0);
-  glBegin(GL_POINTS);
+  glBegin(GL_LINE_LOOP);
   for (int i = 0; i < numVertices; i++) {
     int j = (i + 1) % numVertices;
     glVertex2i(vertices[i][0], vertices[i][1]);
