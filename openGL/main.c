@@ -12,7 +12,6 @@ void displayPM(void);
 void iniciarDDA(void);
 void iniciarPM(void);
 int obterQtdUsuario();
-void coletarVertices();
 void desenharPoligonoDDA();
 void desenharPoligonoPM();
 void rasterizarLinhaDDA(int x1, int y1, int x2, int y2);
@@ -24,8 +23,6 @@ int main(int argc, char **argv)
   glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 
   numVertices = obterQtdUsuario();
-  coletarVertices();
-
   iniciarDDA();
   iniciarPM();
   glutKeyboardFunc(keyboard); // Chamada sempre que uma tecla for precionada
@@ -41,6 +38,11 @@ int obterQtdUsuario()
     printf("Digite a quantidade de vértices (1-10): ");
     scanf("%d", &quantidade);
   } while (quantidade < 1 || quantidade > 10);
+  for (int i = 0; i < quantidade; i++)
+  {
+    printf("Digite as coordenadas do vértice %d (x y): ", i + 1);
+    scanf("%d %d", &vertices[i][0], &vertices[i][1]);
+  }
   return quantidade;
 }
 void keyboard(unsigned char key, int x, int y)
@@ -53,11 +55,7 @@ void keyboard(unsigned char key, int x, int y)
 }
 void coletarVertices()
 {
-  for (int i = 0; i < numVertices; i++)
-  {
-    printf("Digite as coordenadas do vértice %d (x y): ", i + 1);
-    scanf("%d %d", &vertices[i][0], &vertices[i][1]);
-  }
+  
 }
 
 void iniciarDDA(void)
@@ -154,7 +152,6 @@ void desenharPoligonoDDA()
 {
   glLineWidth(2.0);
   glColor3f(0.0, 0.0, 0.0);
-  glPointSize(3.0);
   glBegin(GL_POINTS);
   for (int i = 0; i < numVertices; i++)
   {
@@ -168,7 +165,6 @@ void desenharPoligonoPM()
 {
   glLineWidth(1.0);
   glColor3f(0.0, 0.0, 0.0);
-  glPointSize(3.0);
   glBegin(GL_POINTS);
   for (int i = 0; i < numVertices; i++)
   {
@@ -198,93 +194,73 @@ void rasterizarLinhaDDA(int x1, int y1, int x2, int y2)
 
 void rasterizarLinhaPM(int x1, int y1, int x2, int y2)
 {
-  int deltax = abs(x2 - x1);
-  int deltay = abs(y2 - y1);
-  int x, y;
-  if (deltax >= deltay)
+  int dx = x2 - x1;
+  int dy = y2 - y1;
+  int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+  float xIncrement = (float)dx / (float)steps;
+  float yIncrement = (float)dy / (float)steps;
+  float x = (float)x1;
+  float y = (float)y1;
+
+  glBegin(GL_POINTS);
+  for (int i = 0; i <= steps; i++)
   {
-    int d = 2 * deltay - deltax;
-    int ds = 2 * deltay;
-    int dt = 2 * (deltay - deltax);
-    if (x1 < x2)
-    {
-      x = x1;
-      y = y1;
-    }
-    else
-    {
-      x = x2;
-      y = y2;
-      x2 = x1;
-      y2 = y1;
-    }
-    glBegin(GL_POINTS);
+    glVertex2i(round(x), round(y));
+    x += xIncrement;
+    y += yIncrement;
+  }
+  glEnd();
+}
+
+void rasterizeLinePM(int x1, int y1, int x2, int y2)
+{
+  int dx = x2 - x1;
+  int dy = y2 - y1;
+  int x = x1;
+  int y = y1;
+
+  glBegin(GL_POINTS);
+  if (abs(dx) > abs(dy))
+  {
+    int d = 2 * abs(dy) - abs(dx);
+    int incrE = 2 * abs(dy);
+    int incrNE = 2 * (abs(dy) - abs(dx));
     glVertex2i(x, y);
-    for (int i = 0; x < x2; i++)
+    while (x < x2)
     {
-      x++;
-      if (d < 0)
+      if (d <= 0)
       {
-        d += ds;
+        d += incrE;
       }
       else
       {
-        if ((x2 > x1 && y2 > y1) || (x2 < x1 && y2 < y1))
-        {
-          y++;
-        }
-        else
-        {
-          y--;
-        }
-        d += dt;
+        d += incrNE;
+        y += (dy >= 0 ? 1 : -1);
       }
+      x++;
       glVertex2i(x, y);
     }
-    glEnd();
   }
   else
   {
-    int d = 2 * deltax - deltay;
-    int ds = 2 * deltax;
-    int dt = 2 * (deltax - deltay);
-    if (y1 < y2)
-    {
-      x = x1;
-      y = y1;
-    }
-    else
-    {
-      x = x2;
-      y = y2;
-      y2 = y1;
-      x2 = x1;
-    }
-    glPointSize(3.0);
-    glBegin(GL_POINTS);
+    int d = 2 * abs(dx) - abs(dy);
+    int incrE = 2 * abs(dx);
+    int incrNE = 2 * (abs(dx) - abs(dy));
     glVertex2i(x, y);
-    for (int i = 0; y < y2; i++)
+    while (y < y2)
     {
-      y++;
-      if (d < 0)
+      if (d <= 0)
       {
-        d += ds;
+        d += incrE;
       }
       else
       {
-        if ((x2 > x1 && y2 > y1) || (x2 < x1 && y2 < y1))
-        {
-          x++;
-        }
-        else
-        {
-          x--;
-        }
-        d += dt;
+        d += incrNE;
+        x += (dx >= 0 ? 1 : -1);
       }
+      y++;
       glVertex2i(x, y);
     }
-    glEnd();
-    glFlush();
   }
+  glEnd();
 }

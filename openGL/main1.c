@@ -141,7 +141,7 @@ void displayPM(void) {
 void drawPolygonBoundary() {
   glLineWidth(1.0);
   glColor3f(0.0, 0.0, 0.0);
-  glBegin(GL_LINES);
+  glBegin(GL_POINTS);
   for (int i = 0; i < numVertices; i++) {
     int j = (i + 1) % numVertices;
     glVertex2i(vertices[i][0], vertices[i][1]);
@@ -153,7 +153,7 @@ void drawPolygonBoundary() {
 void drawPolygonDDA() {
   glLineWidth(1.0);
   glColor3f(0.0, 0.0, 0.0);
-  glBegin(GL_LINES);
+  glBegin(GL_POINTS);
   for (int i = 0; i < numVertices; i++) {
     int j = (i + 1) % numVertices;
     rasterizeLineDDA(vertices[i][0], vertices[i][1], vertices[j][0], vertices[j][1]);
@@ -164,7 +164,7 @@ void drawPolygonDDA() {
 void drawPolygonPM() {
   glLineWidth(1.0);
   glColor3f(0.0, 0.0, 0.0);
-  glBegin(GL_LINES);
+  glBegin(GL_POINTS);
   for (int i = 0; i < numVertices; i++) {
     int j = (i + 1) % numVertices;
     rasterizeLinePM(vertices[i][0], vertices[i][1], vertices[j][0], vertices[j][1]);
