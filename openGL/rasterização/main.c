@@ -12,6 +12,7 @@ int numVertices;
 int vertices[10][2];
 
 
+
 void displayDDA(void);
 void displayPM(void);
 void iniciarDDA(void);
