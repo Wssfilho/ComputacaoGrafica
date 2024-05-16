@@ -205,7 +205,7 @@ void rasterizarLinhaPM(int x1, int y1, int x2, int y2)
 
     incrE = 2 * dy;
     incrNE = 2 * (dy - dx);
-    d = 2 * dy - dx;
+    d = 2 * (dy - dx);
 
     glVertex2i(x, y);
     while (x != x2) // Loop até alcançar o segundo ponto
