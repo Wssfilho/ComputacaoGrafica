@@ -191,19 +191,24 @@ void rasterizarLinhaDDA(int x1, int y1, int x2, int y2)
 }
 void rasterizarLinhaPM(int x1, int y1, int x2, int y2)
 {
-  int dx = x2 - x1;
-  int dy = y2 - y1;
+  int dx = abs(x2 - x1);
+  int dy = abs(y2 - y1);
   int x = x1;
   int y = y1;
+  int incrE, incrNE, d;
 
   glBegin(GL_POINTS);
-  if (abs(dx) > abs(dy))
+  if (dx >= dy) // Se a linha estiver mais na horizontal
   {
-    int d = 2 * abs(dy) - abs(dx);
-    int incrE = 2 * abs(dy);
-    int incrNE = 2 * (abs(dy) - abs(dx));
+    int incrY = (y2 > y1) ? 1 : -1; // Determina se a linha sobe ou desce
+    int incrX = (x2 > x1) ? 1 : -1; // Determina se a linha vai para a direita ou esquerda
+
+    incrE = 2 * dy;
+    incrNE = 2 * (dy - dx);
+    d = 2 * dy - dx;
+
     glVertex2i(x, y);
-    while (x != x2)  // Modificação aqui
+    while (x != x2) // Loop até alcançar o segundo ponto
     {
       if (d <= 0)
       {
@@ -212,19 +217,23 @@ void rasterizarLinhaPM(int x1, int y1, int x2, int y2)
       else
       {
         d += incrNE;
-        y += (dy >= 0 ? 1 : -1);
+        y += incrY;
       }
-      x += (dx >= 0 ? 1 : -1);  // Modificação aqui
+      x += incrX;
       glVertex2i(x, y);
     }
   }
-  else
+  else // Se a linha estiver mais na vertical
   {
-    int d = 2 * abs(dx) - abs(dy);
-    int incrE = 2 * abs(dx);
-    int incrNE = 2 * (abs(dx) - abs(dy));
+    int incrX = (x2 > x1) ? 1 : -1; // Determina se a linha vai para a direita ou esquerda
+    int incrY = (y2 > y1) ? 1 : -1; // Determina se a linha sobe ou desce
+
+    incrE = 2 * dx;
+    incrNE = 2 * (dx - dy);
+    d = 2 * (dx - dy);
+
     glVertex2i(x, y);
-    while (y != y2)  // Modificação aqui
+    while (y != y2) // Loop até alcançar o segundo ponto
     {
       if (d <= 0)
       {
@@ -233,9 +242,9 @@ void rasterizarLinhaPM(int x1, int y1, int x2, int y2)
       else
       {
         d += incrNE;
-        x += (dx >= 0 ? 1 : -1);
+        x += incrX;
       }
-      y += (dy >= 0 ? 1 : -1);  // Modificação aqui
+      y += incrY;
       glVertex2i(x, y);
     }
   }
