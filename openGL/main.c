@@ -1,7 +1,6 @@
 #include <GL/glut.h>
 #include <stdio.h>
 #include <math.h>
-#include <stdbool.h>
 
 int DDA, PM;
 int numVertices = 0;
@@ -100,8 +99,8 @@ void displayDDA(void)
 
   // Desenhando os pontos (cor: vermelha)
   glColor3f(1.0, 0.0, 0.0);
-  glPointSize(3.0);
-  glBegin(GL_LINE_LOOP);
+  glPointSize(4.0);
+  glBegin(GL_POINTS);
   for (int i = 0; i < numVertices; i++)
   {
     glVertex3i(vertices[i][0], vertices[i][1], 0.0);
@@ -135,8 +134,8 @@ void displayPM(void)
 
   // Desenhando os pontos (cor: vermelha)
   glColor3f(1.0, 0.0, 0.0);
-  glPointSize(3.0);
-  glBegin(GL_LINE_LOOP);
+  glPointSize(4.0);
+  glBegin(GL_POINTS);
   for (int i = 0; i < numVertices; i++)
   {
     glVertex3i(vertices[i][0], vertices[i][1], 0.0);
