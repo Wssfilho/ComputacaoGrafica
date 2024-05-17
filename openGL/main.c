@@ -210,15 +210,15 @@ void rasterizarLinhaPM(int x1, int y1, int x2, int y2)
   int dy = abs(y2 - y1); // Variação absoluta em y
   int x = x1; // Coordenada inicial de x
   int y = y1; // Coordenada inicial de y
-  int incrE, incrNE, d; // Variáveis auxiliares para o algoritmo
+  int incE, incNE, d; // Variáveis auxiliares para o algoritmo
   glBegin(GL_POINTS); // Inicia o desenho de pontos
   if (dx >= dy) // Se a linha estiver mais na horizontal
   {
     int incrY = (y2 > y1) ? 1 : -1; // Determina se a linha sobe ou desce
     int incrX = (x2 > x1) ? 1 : -1; // Determina se a linha vai para a direita ou esquerda
 
-    incrE = 2 * dy; // Incremento quando o ponto do meio está acima da linha
-    incrNE = 2 * (dy - dx); // Incremento quando o ponto do meio está acima e à direita da linha
+    incE = 2 * dy; // Incremento quando o ponto do meio está acima da linha
+    incNE = 2 * (dy - dx); // Incremento quando o ponto do meio está acima e à direita da linha
     d = 2 * dy - dx; // Critério de decisão inicial
     //EU FIQUEI EM DÚVIDA SE SERIA COM OU SEM PARÊNTESES
     //d = 2 * (dy - dx);
@@ -227,11 +227,11 @@ void rasterizarLinhaPM(int x1, int y1, int x2, int y2)
     {
       if (d <= 0) // Verifica o critério de decisão
       {
-        d += incrE; // Seleciona o próximo ponto acima da linha
+        d += incE; // Seleciona o próximo ponto acima da linha
       }
       else
       {
-        d += incrNE; // Seleciona o próximo ponto acima e à direita da linha
+        d += incNE; // Seleciona o próximo ponto acima e à direita da linha
         y += incrY; // Move para o próximo ponto na direção y
       }
       x += incrX; // Move para o próximo ponto na direção x
@@ -243,8 +243,8 @@ void rasterizarLinhaPM(int x1, int y1, int x2, int y2)
     int incrX = (x2 > x1) ? 1 : -1; // Determina se a linha vai para a direita ou esquerda
     int incrY = (y2 > y1) ? 1 : -1; // Determina se a linha sobe ou desce
 
-    incrE = 2 * dx; // Incremento quando o ponto do meio está à direita da linha
-    incrNE = 2 * (dx - dy); // Incremento quando o ponto do meio está acima e à direita da linha
+    incE = 2 * dx; // Incremento quando o ponto do meio está à direita da linha
+    incNE = 2 * (dx - dy); // Incremento quando o ponto do meio está acima e à direita da linha
     d = 2 * dx - dy; // Critério de decisão inicial
 
     glVertex2i(x, y); // Desenha o primeiro ponto da linha
@@ -252,11 +252,11 @@ void rasterizarLinhaPM(int x1, int y1, int x2, int y2)
     {
       if (d <= 0) // Verifica o critério de decisão
       {
-        d += incrE; // Seleciona o próximo ponto à direita da linha
+        d += incE; // Seleciona o próximo ponto à direita da linha
       }
       else
       {
-        d += incrNE; // Seleciona o próximo ponto acima e à direita da linha
+        d += incNE; // Seleciona o próximo ponto acima e à direita da linha
         x += incrX; // Move para o próximo ponto na direção x
       }
       y += incrY; // Move para o próximo ponto na direção y
