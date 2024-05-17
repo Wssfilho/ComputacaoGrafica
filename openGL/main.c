@@ -1,20 +1,20 @@
-#include <GL/glut.h> // Inclui a biblioteca GLUT para lidar com janelas e gráficos OpenGL
-#include <stdio.h> // Inclui a biblioteca padrão de entrada e saída
-#include <math.h> // Inclui a biblioteca matemática para funções matemáticas
+#include <GL/glut.h> 
+#include <stdio.h> 
+#include <math.h> 
 
 int DDA, PM; // Variáveis para armazenar os identificadores das janelas
 int numVertices = 0; // Número de vértices do polígono
 int vertices[10][2]; // Array para armazenar os vértices do polígono
 void keyboard(unsigned char key, int x, int y); // Protótipo da função para lidar com eventos do teclado
-void displayDDA(void); // Protótipo da função de renderização usando o algoritmo DDA
-void displayPM(void); // Protótipo da função de renderização usando o algoritmo do Ponto Médio
-void iniciarDDA(void); // Protótipo da função para iniciar a janela do algoritmo DDA
-void iniciarPM(void); // Protótipo da função para iniciar a janela do algoritmo do Ponto Médio
-int obterQtdUsuario(); // Protótipo da função para obter a quantidade de vértices do usuário
-void desenharPoligonoDDA(); // Protótipo da função para desenhar um polígono usando o algoritmo DDA
-void desenharPoligonoPM(); // Protótipo da função para desenhar um polígono usando o algoritmo do Ponto Médio
-void rasterizarLinhaDDA(int x1, int y1, int x2, int y2); // Protótipo da função para rasterizar uma linha usando o algoritmo DDA
-void rasterizarLinhaPM(int x1, int y1, int x2, int y2); // Protótipo da função para rasterizar uma linha usando o algoritmo do Ponto Médio
+void displayDDA(void); 
+void displayPM(void); 
+void iniciarDDA(void); 
+void iniciarPM(void); 
+int obterQtdUsuario(); 
+void desenharPoligonoDDA();
+void desenharPoligonoPM(); 
+void rasterizarLinhaDDA(int x1, int y1, int x2, int y2); 
+void rasterizarLinhaPM(int x1, int y1, int x2, int y2); 
 
 int main(int argc, char **argv)
 {
@@ -220,7 +220,8 @@ void rasterizarLinhaPM(int x1, int y1, int x2, int y2)
     incrE = 2 * dy; // Incremento quando o ponto do meio está acima da linha
     incrNE = 2 * (dy - dx); // Incremento quando o ponto do meio está acima e à direita da linha
     d = 2 * dy - dx; // Critério de decisão inicial
-
+    //EU FIQUEI EM DÚVIDA SE SERIA COM OU SEM PARÊNTESES
+    //d = 2 * (dy - dx);
     glVertex2i(x, y); // Desenha o primeiro ponto da linha
     while (x != x2) // Loop até alcançar o segundo ponto
     {
