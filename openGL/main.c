@@ -219,7 +219,7 @@ void rasterizarLinhaPM(int x1, int y1, int x2, int y2)
 
     incrE = 2 * dy; // Incremento quando o ponto do meio está acima da linha
     incrNE = 2 * (dy - dx); // Incremento quando o ponto do meio está acima e à direita da linha
-    d = 2 * (dy - dx); // Critério de decisão inicial
+    d = 2 * dy - dx; // Critério de decisão inicial
 
     glVertex2i(x, y); // Desenha o primeiro ponto da linha
     while (x != x2) // Loop até alcançar o segundo ponto
@@ -244,7 +244,7 @@ void rasterizarLinhaPM(int x1, int y1, int x2, int y2)
 
     incrE = 2 * dx; // Incremento quando o ponto do meio está à direita da linha
     incrNE = 2 * (dx - dy); // Incremento quando o ponto do meio está acima e à direita da linha
-    d = 2 * (dx - dy); // Critério de decisão inicial
+    d = 2 * dx - dy; // Critério de decisão inicial
 
     glVertex2i(x, y); // Desenha o primeiro ponto da linha
     while (y != y2) // Loop até alcançar o segundo ponto
