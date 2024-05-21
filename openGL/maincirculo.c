@@ -49,10 +49,7 @@ void drawQuadrants(int xc, int yc, int r) {
     glVertex2i(xc + r, yc);
 
     // Linhas diagonais dos quadrantes
-    glVertex2i(xc - r, yc - r);
-    glVertex2i(xc + r, yc + r);
-    glVertex2i(xc - r, yc + r);
-    glVertex2i(xc + r, yc - r);
+   
     glEnd();
 }
 
