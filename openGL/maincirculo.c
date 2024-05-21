@@ -1,7 +1,6 @@
 #include <GL/glut.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 
 int PM; // Variável da janela gráfica do Ponto Médio
 int raio = 200; // Raio inicial
