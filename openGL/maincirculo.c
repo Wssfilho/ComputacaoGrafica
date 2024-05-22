@@ -24,10 +24,10 @@ void desenhaCirculoPM(int raio)
     int y = raio;
     int d = 1 - raio;
 
-    ponto_circulo(x, y); // Desenha o primeiro ponto e seus simétricos
 
     while (y > x) // Enquanto o y for maior que x, desenha os pontos simétricos
     {
+        ponto_circulo(x, y); // Desenha os pontos simétricos
         if (d < 0) // Se d for menor que 0, escolhe E
         {
             d += 2 * x + 3; // Atualiza d
@@ -38,7 +38,6 @@ void desenhaCirculoPM(int raio)
             y--; // Decrementa y
         }
         x++; // Incrementa x
-        ponto_circulo(x, y); // Desenha os pontos simétricos
     }
 }
 
