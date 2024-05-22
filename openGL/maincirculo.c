@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 int PM;       // Variável da janela gráfica do Ponto Médio
-int raio = 0; // Raio inicial, limitado a 10
+int raio = 0; // Raio inicial, limitado a 0, para não ficar uma variável sem valor
 
 void ponto_circulo(int x, int y)
 {
@@ -26,26 +26,25 @@ void desenhaCirculoPM(int raio)
 
     ponto_circulo(x, y); // Desenha o primeiro ponto e seus simétricos
 
-    while (y > x)
+    while (y > x) // Enquanto o y for maior que x, desenha os pontos simétricos
     {
-        if (d < 0)
+        if (d < 0) // Se d for menor que 0, escolhe E
         {
-            d += 2 * x + 3;
+            d += 2 * x + 3; // Atualiza d
         }
-        else
+        else // Se d for maior ou igual a 0, escolhe SE
         {
-            d += 2 * (x - y) + 5;
-            y--;
+            d += 2 * (x - y) + 5; // Atualiza d
+            y--; // Decrementa y
         }
-        x++;
-        ponto_circulo(x, y);
+        x++; // Incrementa x
+        ponto_circulo(x, y); // Desenha os pontos simétricos
     }
 }
 
 void desenhaQuadrantes(int xc, int yc, int r)
 {
-    // Função para desenhar os quadrantes do círculo
-
+    // Função para desenhar os quadrantes do círculo, as linhas azuis
     glVertex2i(xc + r, yc);
     glVertex2i(xc - r, yc);
     glVertex2i(yc, xc + r);
@@ -70,13 +69,14 @@ void displayPM(void)
 }
 void receberRaio()
 {
+    // Função para receber o raio do círculo
     printf("Digite o novo raio (limite máximo 10): ");
-    while (scanf("%d", &raio) != 1 || raio < 0 || raio > 10)
+    while (scanf("%d", &raio) != 1 || raio < 0 || raio > 10) // Limita o raio entre 0 e 10
     {
         printf("Digite um valor válido para o raio (limite máximo 10): ");
     }
 }
-void teclado(unsigned char tecla, int x, int y)
+void teclado(unsigned char tecla, int x, int y) // Função para sair do programa
 {
     switch (tecla)
     {
@@ -86,7 +86,7 @@ void teclado(unsigned char tecla, int x, int y)
     }
 }
 
-int main(int argc, char **argv)
+int main(int argc, char **argv) // Função principal
 {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
