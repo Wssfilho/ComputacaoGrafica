@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 int PM; // Variável da janela gráfica do Ponto Médio
-int raio = 5; // Raio inicial, limitado a 10
+int raio = 0; // Raio inicial, limitado a 10
 
 void ponto_circulo(int x, int y) {
     // Função para desenhar os pontos simétricos em todos os octantes do círculo
@@ -61,29 +61,27 @@ void displayPM(void) {
     glEnd();
     glFlush();
 }
-
+void receberRaio()
+{
+        printf("Digite o novo raio (limite máximo 10): ");
+        while(scanf("%d", &raio) != 1 || raio < 0 || raio > 10) {
+            printf("Digite um valor válido para o raio (limite máximo 10): ");
+        }
+       
+}
 void teclado(unsigned char tecla, int x, int y) {
     switch (tecla) {
     case 27: // Tecla Esc para sair
         exit(0);
         break;
-    case 'r': // Tecla 'r' para ler o novo raio do teclado
-        printf("Digite o novo raio (limite máximo 10): ");
-        int novoRaio;
-        scanf("%d", &novoRaio);
-        if (novoRaio <= 10 && novoRaio > 0) {
-            raio = novoRaio;
-            glutPostRedisplay(); // Redesenha a janela
-        } else {
-            printf("Raio inválido! O raio deve estar entre 1 e 10.\n");
-        }
-        break;
     }
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv) 
+{
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    receberRaio(); // Raio inicial
     glutInitWindowSize(640, 640);
     glutInitWindowPosition(10, 10);
     PM = glutCreateWindow("Ponto Médio");
