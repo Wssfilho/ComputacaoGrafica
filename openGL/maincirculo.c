@@ -70,7 +70,7 @@ void receberRaio()
 {
     // Função para receber o raio do círculo
     printf("Digite o novo raio (limite máximo 10): ");
-    while (scanf("%d", &raio) != 1 || raio < 0 || raio > 10) // Limita o raio entre 0 e 10
+    while (scanf("%d", &raio) != 1 || raio <= 0 || raio > 10) // Limita o raio entre 0 e 10, validação tmb caso o raio queja igual a 0
     {
         printf("Digite um valor válido para o raio (limite máximo 10): ");
     }
@@ -94,7 +94,7 @@ int main(int argc, char **argv) // Função principal
     glutInitWindowPosition(10, 10);
     PM = glutCreateWindow("Ponto Médio");
     glClearColor(1.0, 1.0, 1.0, 0.0);
-    glOrtho(-10, 10, -10, 10, -1, 1); // Ajuste para cobrir o espaço adequado
+    glOrtho(-11, 11, -11, 11, -1, 1); // Ajuste para cobrir o espaço adequado
     glutDisplayFunc(displayPM);
     glutKeyboardFunc(teclado);
     glutMainLoop();
