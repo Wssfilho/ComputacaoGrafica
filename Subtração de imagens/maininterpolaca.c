@@ -4,7 +4,7 @@
 FILE *fpin, *fpoutViz1, *fpoutViz4;
 int **imagemR, **imagemG, **imagemB, ncol, nlin, quant_nivel_cinza;
 
-void abrir_arquivos(char *nome_arquivo);
+void abrir_arquivos(int argc, char *argv[]);
 void ler_cabecalho(void);
 void ler_imagem(void);
 void gravar_cabecalho(FILE *fp);
@@ -13,9 +13,14 @@ void fechar_arquivos(void);
 void vizinho1(int **imagem, int linha, int coluna, int **Imagem);
 void vizinho4(int **imagem, int linha, int coluna, int **Imagem);
 
-void abrir_arquivos(char *nome_arquivo) {
-    if ((fpin = fopen(nome_arquivo, "r")) == NULL) {
-        printf("Nao foi possivel abrir arquivo de imagem %s\n", nome_arquivo);
+void abrir_arquivos(int argc, char *argv[]) {
+    if (argc < 2)
+    {
+        printf("Modo correto de uso: <prog> <fotocomobj> <fotosemobj>\n");
+        exit(1);
+    }
+    if ((fpin = fopen(argv[1], "r")) == NULL) {
+        printf("Nao foi possivel abrir arquivo de imagem %s\n", argv[1]);
         exit(1);
     }
     if ((fpoutViz1 = fopen("ImagemViz1.ppm", "w")) == NULL) {
@@ -109,17 +114,14 @@ void vizinho4(int **imagem, int linha, int coluna, int **Imagem) {
     }
 }
 
-int main() {
-    char nome_arquivo[100];
-    printf("Digite o nome do arquivo de imagem: ");
-    scanf("%s", nome_arquivo);
-    
+int main(int argc, char *argv[]) {
+   
     printf("Digite o valor de m (numero de linhas): ");
     scanf("%d", &nlin);
     printf("Digite o valor de n (numero de colunas): ");
     scanf("%d", &ncol);
     
-    abrir_arquivos(nome_arquivo);
+    abrir_arquivos(argc, argv);
     ler_cabecalho();
     ler_imagem();
 
