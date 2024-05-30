@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-FILE *fpin, *fpoutR, *fpoutG, *fpoutB;
+FILE *fpin, *fpoutViz1, *fpoutViz4;
 int **imagemR, **imagemG, **imagemB, ncol, nlin, quant_nivel_cinza;
 
 void abrir_arquivos(int argc, char *argv[]);
@@ -22,16 +22,12 @@ void abrir_arquivos(int argc, char *argv[]) {
         printf("Nao foi possivel abrir arquivo de imagem %s\n", argv[1]);
         exit(1);
     }
-    if ((fpoutR = fopen("ImagemR.ppm", "w")) == NULL) {
-        printf("Nao foi possivel abrir arquivo de saida R\n");
+    if ((fpoutViz1 = fopen("ImagemViz1.ppm", "w")) == NULL) {
+        printf("Nao foi possivel abrir arquivo de saida Vizinho 1\n");
         exit(1);
     }
-    if ((fpoutG = fopen("ImagemG.ppm", "w")) == NULL) {
-        printf("Nao foi possivel abrir arquivo de saida G\n");
-        exit(1);
-    }
-    if ((fpoutB = fopen("ImagemB.ppm", "w")) == NULL) {
-        printf("Nao foi possivel abrir arquivo de saida B\n");
+    if ((fpoutViz4 = fopen("ImagemViz4.ppm", "w")) == NULL) {
+        printf("Nao foi possivel abrir arquivo de saida Vizinho 4\n");
         exit(1);
     }
 }
@@ -68,9 +64,8 @@ void ler_cabecalho(void) {
 
 void fechar_arquivos(void) {
     fclose(fpin);
-    fclose(fpoutR);
-    fclose(fpoutG);
-    fclose(fpoutB);
+    fclose(fpoutViz1);
+    fclose(fpoutViz4);
 }
 
 void gravar_cabecalho(FILE *fp) {
@@ -129,9 +124,7 @@ int main(int argc, char *argv[]) {
     vizinho1(imagemR, nlin, ncol, Interpolacao1_R);
     vizinho1(imagemG, nlin, ncol, Interpolacao1_G);
     vizinho1(imagemB, nlin, ncol, Interpolacao1_B);
-    gravar_imagem(fpoutR, Interpolacao1_R);
-    gravar_imagem(fpoutG, Interpolacao1_G);
-    gravar_imagem(fpoutB, Interpolacao1_B);
+    gravar_imagem(fpoutViz1, Interpolacao1_R);
 
     int **Interpolacao4_R = (int **)malloc(2 * nlin * sizeof(int *));
     int **Interpolacao4_G = (int **)malloc(2 * nlin * sizeof(int *));
@@ -139,9 +132,7 @@ int main(int argc, char *argv[]) {
     Vizinho4(imagemR, nlin, ncol, Interpolacao4_R);
     Vizinho4(imagemG, nlin, ncol, Interpolacao4_G);
     Vizinho4(imagemB, nlin, ncol, Interpolacao4_B);
-    gravar_imagem(fpoutR, Interpolacao4_R);
-    gravar_imagem(fpoutG, Interpolacao4_G);
-    gravar_imagem(fpoutB, Interpolacao4_B);
+    gravar_imagem(fpoutViz4, Interpolacao4_R);
 
     fechar_arquivos();
     return 0;
