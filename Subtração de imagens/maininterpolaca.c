@@ -4,22 +4,18 @@
 FILE *fpin, *fpoutViz1, *fpoutViz4;
 int **imagemR, **imagemG, **imagemB, ncol, nlin, quant_nivel_cinza;
 
-void abrir_arquivos(int argc, char *argv[]);
+void abrir_arquivos(char *nome_arquivo);
 void ler_cabecalho(void);
 void ler_imagem(void);
 void gravar_cabecalho(FILE *fp);
 void gravar_imagem(FILE *fp, int **imagem);
 void fechar_arquivos(void);
 void vizinho1(int **imagem, int linha, int coluna, int **Imagem);
-void Vizinho4(int **imagem, int linha, int coluna, int **Imagem);
+void vizinho4(int **imagem, int linha, int coluna, int **Imagem);
 
-void abrir_arquivos(int argc, char *argv[]) {
-    if (argc <= 1) {
-        printf("Modo correto de uso: <prog> <imagemIn>\n");
-        exit(0);
-    }
-    if ((fpin = fopen(argv[1], "r")) == NULL) {
-        printf("Nao foi possivel abrir arquivo de imagem %s\n", argv[1]);
+void abrir_arquivos(char *nome_arquivo) {
+    if ((fpin = fopen(nome_arquivo, "r")) == NULL) {
+        printf("Nao foi possivel abrir arquivo de imagem %s\n", nome_arquivo);
         exit(1);
     }
     if ((fpoutViz1 = fopen("ImagemViz1.ppm", "w")) == NULL) {
@@ -70,15 +66,15 @@ void fechar_arquivos(void) {
 
 void gravar_cabecalho(FILE *fp) {
     fprintf(fp, "P3\n");
-    fprintf(fp, "%d %d\n", ncol, nlin);
+    fprintf(fp, "%d %d\n", ncol * 2, nlin * 2);
     fprintf(fp, "%d\n", quant_nivel_cinza);
 }
 
 void gravar_imagem(FILE *fp, int **imagem) {
     int lin, col;
     gravar_cabecalho(fp);
-    for (lin = 0; lin < nlin; lin++) {
-        for (col = 0; col < ncol; col++) {
+    for (lin = 0; lin < nlin * 2; lin++) {
+        for (col = 0; col < ncol * 2; col++) {
             fprintf(fp, "%d ", imagem[lin][col]);
         }
         fprintf(fp, "\n");
@@ -94,7 +90,7 @@ void vizinho1(int **imagem, int linha, int coluna, int **Imagem) {
     }
 }
 
-void Vizinho4(int **imagem, int linha, int coluna, int **Imagem) {
+void vizinho4(int **imagem, int linha, int coluna, int **Imagem) {
     int i, j;
     for (i = 0; i < linha; i++) {
         for (j = 0; j < coluna; j++) {
@@ -113,8 +109,17 @@ void Vizinho4(int **imagem, int linha, int coluna, int **Imagem) {
     }
 }
 
-int main(int argc, char *argv[]) {
-    abrir_arquivos(argc, argv);
+int main() {
+    char nome_arquivo[100];
+    printf("Digite o nome do arquivo de imagem: ");
+    scanf("%s", nome_arquivo);
+    
+    printf("Digite o valor de m (numero de linhas): ");
+    scanf("%d", &nlin);
+    printf("Digite o valor de n (numero de colunas): ");
+    scanf("%d", &ncol);
+    
+    abrir_arquivos(nome_arquivo);
     ler_cabecalho();
     ler_imagem();
 
@@ -129,11 +134,23 @@ int main(int argc, char *argv[]) {
     int **Interpolacao4_R = (int **)malloc(2 * nlin * sizeof(int *));
     int **Interpolacao4_G = (int **)malloc(2 * nlin * sizeof(int *));
     int **Interpolacao4_B = (int **)malloc(2 * nlin * sizeof(int *));
-    Vizinho4(imagemR, nlin, ncol, Interpolacao4_R);
-    Vizinho4(imagemG, nlin, ncol, Interpolacao4_G);
-    Vizinho4(imagemB, nlin, ncol, Interpolacao4_B);
+    vizinho4(imagemR, nlin, ncol, Interpolacao4_R);
+    vizinho4(imagemG, nlin, ncol, Interpolacao4_G);
+    vizinho4(imagemB, nlin, ncol, Interpolacao4_B);
     gravar_imagem(fpoutViz4, Interpolacao4_R);
 
     fechar_arquivos();
+    
+    // Liberar memória alocada
+    free(Interpolacao1_R);
+    free(Interpolacao1_G);
+    free(Interpolacao1_B);
+    free(Interpolacao4_R);
+    free(Interpolacao4_G);
+    free(Interpolacao4_B);
+    free(imagemR);
+    free(imagemG);
+    free(imagemB);
+
     return 0;
 }
