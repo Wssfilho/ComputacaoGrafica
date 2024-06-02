@@ -1,158 +1,251 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-FILE *fpin, *fpoutViz1, *fpoutViz4;
-int **imagemR, **imagemG, **imagemB, ncol, nlin, quant_nivel_cinza;
+typedef struct {
+    unsigned char vermelho, verde, azul;
+} Pixel;
 
-void abrir_arquivos(int argc, char *argv[]);
-void ler_cabecalho(void);
-void ler_imagem(void);
-void gravar_cabecalho(FILE *fp);
-void gravar_imagem(FILE *fp, int **imagem);
-void fechar_arquivos(void);
-void vizinho1(int **imagem, int linha, int coluna, int **Imagem);
-void vizinho4(int **imagem, int linha, int coluna, int **Imagem);
+typedef struct {
+    int largura, altura;
+    Pixel* dados;
+} Imagem;
 
-void abrir_arquivos(int argc, char *argv[]) {
-    if (argc < 2)
-    {
-        printf("Modo correto de uso: <prog> <fotocomobj> <fotosemobj>\n");
-        exit(1);
-    }
-    if ((fpin = fopen(argv[1], "r")) == NULL) {
-        printf("Nao foi possivel abrir arquivo de imagem %s\n", argv[1]);
-        exit(1);
-    }
-    if ((fpoutViz1 = fopen("ImagemViz1.ppm", "w")) == NULL) {
-        printf("Nao foi possivel abrir arquivo de saida Vizinho 1\n");
-        exit(1);
-    }
-    if ((fpoutViz4 = fopen("ImagemViz4.ppm", "w")) == NULL) {
-        printf("Nao foi possivel abrir arquivo de saida Vizinho 4\n");
-        exit(1);
-    }
+void liberarImagem(Imagem* img) {
+    free(img->dados);
+    free(img);
 }
 
-void ler_imagem(void) {
-    int cont, col, lin;
-    imagemR = (int **)malloc((nlin + 1) * sizeof(int *));
-    imagemG = (int **)malloc((nlin + 1) * sizeof(int *));
-    imagemB = (int **)malloc((nlin + 1) * sizeof(int *));
-    for (cont = 0; cont < nlin; cont++) {
-        imagemR[cont] = (int *)malloc(ncol * sizeof(int));
-        imagemG[cont] = (int *)malloc(ncol * sizeof(int));
-        imagemB[cont] = (int *)malloc(ncol * sizeof(int));
-        if (imagemR[cont] == NULL || imagemG[cont] == NULL || imagemB[cont] == NULL) {
-            printf("Falha na alocacao de memoria - 1\n");
-            exit(1);
+Imagem* carregarImagem(const char* nomeArquivo) {
+    FILE* arquivo = fopen(nomeArquivo, "r");
+    if (!arquivo) {
+        fprintf(stderr, "Erro ao abrir o arquivo de imagem\n");
+        return NULL;
+    }
+
+    Imagem* img = (Imagem*)malloc(sizeof(Imagem));
+    if (!img) {
+        fprintf(stderr, "Erro de alocação de memória para a estrutura de imagem\n");
+        fclose(arquivo);
+        return NULL;
+    }
+
+    char magica[3];
+    fscanf(arquivo, "%s %d %d %*d", magica, &(img->largura), &(img->altura));
+
+    if (magica[0] != 'P' || magica[1] != '3') {
+        fprintf(stderr, "Formato de imagem não suportado\n");
+        free(img);
+        fclose(arquivo);
+        return NULL;
+    }
+
+    img->dados = (Pixel*)malloc(img->largura * img->altura * sizeof(Pixel));
+    if (!img->dados) {
+        fprintf(stderr, "Erro de alocação de memória para os pixels da imagem\n");
+        free(img);
+        fclose(arquivo);
+        return NULL;
+    }
+
+    for (int i = 0; i < img->largura * img->altura; i++) {
+        fscanf(arquivo, "%hhu %hhu %hhu", &(img->dados[i].vermelho), &(img->dados[i].verde), &(img->dados[i].azul));
+    }
+
+    fclose(arquivo);
+    return img;
+}
+
+void salvarImagem(const char* nomeArquivo, Imagem* img) {
+    FILE* arquivo = fopen(nomeArquivo, "w");
+    if (!arquivo) {
+        fprintf(stderr, "Erro ao criar arquivo PPM\n");
+        return;
+    }
+
+    fprintf(arquivo, "P3\n");
+    fprintf(arquivo, "%d %d\n255\n", img->largura, img->altura);
+
+    for (int i = 0; i < img->largura * img->altura; i++) {
+        fprintf(arquivo, "%d %d %d\n", img->dados[i].vermelho, img->dados[i].verde, img->dados[i].azul);
+    }
+
+    fclose(arquivo);
+}
+
+Pixel interpolarPixel1Vizinhanca(Imagem* entrada, float x, float y) {
+    int x0 = (int)x;
+    int y0 = (int)y;
+
+    int x1, y1;
+    x1 = (x0 + 1) % entrada->largura;
+    y1 = y0;
+    float fracX = x - x0;
+    float fracY = y - y0;
+
+    // Interpolação bilinear
+    Pixel pixelInterpolado;
+    pixelInterpolado.vermelho = (1 - fracX) * (1 - fracY) * entrada->dados[y0 * entrada->largura + x0].vermelho +
+                                fracX * (1 - fracY) * entrada->dados[y0 * entrada->largura + x1].vermelho +
+                                (1 - fracX) * fracY * entrada->dados[y1 * entrada->largura + x0].vermelho +
+                                fracX * fracY * entrada->dados[y1 * entrada->largura + x1].vermelho;
+
+    pixelInterpolado.verde = (1 - fracX) * (1 - fracY) * entrada->dados[y0 * entrada->largura + x0].verde +
+                             fracX * (1 - fracY) * entrada->dados[y0 * entrada->largura + x1].verde +
+                             (1 - fracX) * fracY * entrada->dados[y1 * entrada->largura + x0].verde +
+                             fracX * fracY * entrada->dados[y1 * entrada->largura + x1].verde;
+
+    pixelInterpolado.azul = (1 - fracX) * (1 - fracY) * entrada->dados[y0 * entrada->largura + x0].azul +
+                            fracX * (1 - fracY) * entrada->dados[y0 * entrada->largura + x1].azul +
+                            (1 - fracX) * fracY * entrada->dados[y1 * entrada->largura + x0].azul +
+                            fracX * fracY * entrada->dados[y1 * entrada->largura + x1].azul;
+
+    return pixelInterpolado;
+}
+
+Pixel interpolarPixel4Vizinhanca(Imagem* entrada, float x, float y) {
+    int x0 = (int)x;
+    int y0 = (int)y;
+    int x1 = (x0 + 1) % entrada->largura;
+    int y1 = (y0 + 1) % entrada->altura;
+
+    float fracX = x - x0;
+    float fracY = y - y0;
+
+    // Interpolação bilinear
+    Pixel pixelInterpolado;
+    pixelInterpolado.vermelho = (1 - fracX) * (1 - fracY) * entrada->dados[y0 * entrada->largura + x0].vermelho +
+                                fracX * (1 - fracY) * entrada->dados[y0 * entrada->largura + x1].vermelho +
+                                (1 - fracX) * fracY * entrada->dados[y1 * entrada->largura + x0].vermelho +
+                                fracX * fracY * entrada->dados[y1 * entrada->largura + x1].vermelho;
+
+    pixelInterpolado.verde = (1 - fracX) * (1 - fracY) * entrada->dados[y0 * entrada->largura + x0].verde +
+                             fracX * (1 - fracY) * entrada->dados[y0 * entrada->largura + x1].verde +
+                             (1 - fracX) * fracY * entrada->dados[y1 * entrada->largura + x0].verde +
+                             fracX * fracY * entrada->dados[y1 * entrada->largura + x1].verde;
+
+    pixelInterpolado.azul = (1 - fracX) * (1 - fracY) * entrada->dados[y0 * entrada->largura + x0].azul +
+                            fracX * (1 - fracY) * entrada->dados[y0 * entrada->largura + x1].azul +
+                            (1 - fracX) * fracY * entrada->dados[y1 * entrada->largura + x0].azul +
+                            fracX * fracY * entrada->dados[y1 * entrada->largura + x1].azul;
+
+    return pixelInterpolado;
+}
+
+Imagem* interpolarImagem4Vizinhanca(Imagem* entrada, float m, float n) {
+    int novaLargura = (int)(entrada->largura * m);
+    int novaAltura = (int)(entrada->altura * n);
+
+    Imagem* saida = (Imagem*)malloc(sizeof(Imagem));
+    if (!saida) {
+        fprintf(stderr, "Erro de alocação de memória para a imagem interpolada\n");
+        return NULL;
+    }
+
+    saida->largura = novaLargura;
+    saida->altura = novaAltura;
+    saida->dados = (Pixel*)malloc(novaLargura * novaAltura * sizeof(Pixel));
+
+    if (!saida->dados) {
+        fprintf(stderr, "Erro de alocação de memória para os pixels da imagem interpolada\n");
+        free(saida);
+        return NULL;
+    }
+
+    for (int y = 0; y < novaAltura; y++) {
+        for (int x = 0; x < novaLargura; x++) {
+            float origemX = (float)x / novaLargura * entrada->largura;
+            float origemY = (float)y / novaAltura * entrada->altura;
+
+            // 4-vizinhança (média aritmética simples)
+            saida->dados[y * novaLargura + x] = interpolarPixel4Vizinhanca(entrada, origemX, origemY);
         }
     }
-    for (lin = 0; lin < nlin; lin++) {
-        for (col = 0; col < ncol; col++) {
-            fscanf(fpin, "%d", &imagemR[lin][col]);
-            fscanf(fpin, "%d", &imagemG[lin][col]);
-            fscanf(fpin, "%d", &imagemB[lin][col]);
+
+    return saida;
+}
+
+Imagem* interpolarImagem1Vizinhanca(Imagem* entrada, float m, float n) {
+    int novaLargura = (int)(entrada->largura * m);
+    int novaAltura = (int)(entrada->altura * n);
+
+    Imagem* saida = (Imagem*)malloc(sizeof(Imagem));
+    if (!saida) {
+        fprintf(stderr, "Erro de alocação de memória para a imagem interpolada\n");
+        return NULL;
+    }
+
+    saida->largura = novaLargura;
+    saida->altura = novaAltura;
+    saida->dados = (Pixel*)malloc(novaLargura * novaAltura * sizeof(Pixel));
+
+    if (!saida->dados) {
+        fprintf(stderr, "Erro de alocação de memória para os pixels da imagem interpolada\n");
+        free(saida);
+        return NULL;
+    }
+
+    for (int y = 0; y < novaAltura; y++) {
+        for (int x = 0; x < novaLargura; x++) {
+            float origemX = (float)x / novaLargura * entrada->largura;
+            float origemY = (float)y / novaAltura * entrada->altura;
+
+            // 1-vizinhança com escolha de vizinho
+            saida->dados[y * novaLargura + x] = interpolarPixel1Vizinhanca(entrada, origemX, origemY);
         }
     }
+
+    return saida;
 }
 
-void ler_cabecalho(void) {
-    char controle[4];
-    fscanf(fpin, "%s", controle);
-    fscanf(fpin, "%d %d", &ncol, &nlin);
-    fscanf(fpin, "%d", &quant_nivel_cinza);
-}
+int main(void) {
+    float m, n;
+    int vizinhanca;
+    char nomeArquivo[100];
 
-void fechar_arquivos(void) {
-    fclose(fpin);
-    fclose(fpoutViz1);
-    fclose(fpoutViz4);
-}
+    printf("Digite o valor de m (constante de proporcionalidade em relação à largura): ");
+    scanf("%f", &m);
 
-void gravar_cabecalho(FILE *fp) {
-    fprintf(fp, "P3\n");
-    fprintf(fp, "%d %d\n", ncol * 2, nlin * 2);
-    fprintf(fp, "%d\n", quant_nivel_cinza);
-}
+    printf("Digite o valor de n (constante de proporcionalidade em relação à altura): ");
+    scanf("%f", &n);
 
-void gravar_imagem(FILE *fp, int **imagem) {
-    int lin, col;
-    gravar_cabecalho(fp);
-    for (lin = 0; lin < nlin * 2; lin++) {
-        for (col = 0; col < ncol * 2; col++) {
-            fprintf(fp, "%d ", imagem[lin][col]);
-        }
-        fprintf(fp, "\n");
+    printf("Insira o nome do arquivo: \n");
+    scanf("%[^\n]s%*c", nomeArquivo);
+
+    printf("Escolha o tipo de vizinhança para interpolação: \n");
+    printf("1 - para uma (1) vizinhanca\n");
+    printf("4 - para quatro (4) vizinhanca com média aritmética simples\n");
+    scanf("%d", &vizinhanca);
+
+    if (vizinhanca != 1 && vizinhanca != 4) {
+        fprintf(stderr, "Opção de vizinhança inválida. Saindo.\n");
+        return -1;
     }
-}
 
-void vizinho1(int **imagem, int linha, int coluna, int **Imagem) {
-    int i, j;
-    for (i = 0; i < linha; i++) {
-        for (j = 0; j < coluna; j++) {
-            Imagem[2 * i][2 * j] = imagem[i][j];
-        }
+    Imagem* imagemOriginal = carregarImagem(nomeArquivo);
+    if (!imagemOriginal) {
+        return -1;
     }
-}
 
-void vizinho4(int **imagem, int linha, int coluna, int **Imagem) {
-    int i, j;
-    for (i = 0; i < linha; i++) {
-        for (j = 0; j < coluna; j++) {
-            Imagem[2 * i][2 * j] = imagem[i][j];
-
-            if (i + 1 < linha) {
-                Imagem[2 * i + 1][2 * j] = imagem[i][j];
-            }
-            if (j + 1 < coluna) {
-                Imagem[2 * i][2 * j + 1] = imagem[i][j];
-            }
-            if (i + 1 < linha && j + 1 < coluna) {
-                Imagem[2 * i + 1][2 * j + 1] = imagem[i][j];
-            }
-        }
+    Imagem* imagemInterpolada;
+    if (vizinhanca == 1) {
+        imagemInterpolada = interpolarImagem1Vizinhanca(imagemOriginal, m, n);
+    } else {
+        imagemInterpolada = interpolarImagem4Vizinhanca(imagemOriginal, m, n);
     }
-}
 
-int main(int argc, char *argv[]) {
-   
-    printf("Digite o valor de m (numero de linhas): ");
-    scanf("%d", &nlin);
-    printf("Digite o valor de n (numero de colunas): ");
-    scanf("%d", &ncol);
-    
-    abrir_arquivos(argc, argv);
-    ler_cabecalho();
-    ler_imagem();
+    if (!imagemInterpolada) {
+        liberarImagem(imagemOriginal);
+        return -1;
+    }
 
-    int **Interpolacao1_R = (int **)malloc(2 * nlin * sizeof(int *));
-    int **Interpolacao1_G = (int **)malloc(2 * nlin * sizeof(int *));
-    int **Interpolacao1_B = (int **)malloc(2 * nlin * sizeof(int *));
-    vizinho1(imagemR, nlin, ncol, Interpolacao1_R);
-    vizinho1(imagemG, nlin, ncol, Interpolacao1_G);
-    vizinho1(imagemB, nlin, ncol, Interpolacao1_B);
-    gravar_imagem(fpoutViz1, Interpolacao1_R);
+    if (vizinhanca == 1) {
+        salvarImagem("1vizinhanca.ppm", imagemInterpolada);
+    } else if (vizinhanca == 4) {
+        salvarImagem("4vizinhanca.ppm", imagemInterpolada);
+    }
 
-    int **Interpolacao4_R = (int **)malloc(2 * nlin * sizeof(int *));
-    int **Interpolacao4_G = (int **)malloc(2 * nlin * sizeof(int *));
-    int **Interpolacao4_B = (int **)malloc(2 * nlin * sizeof(int *));
-    vizinho4(imagemR, nlin, ncol, Interpolacao4_R);
-    vizinho4(imagemG, nlin, ncol, Interpolacao4_G);
-    vizinho4(imagemB, nlin, ncol, Interpolacao4_B);
-    gravar_imagem(fpoutViz4, Interpolacao4_R);
-
-    fechar_arquivos();
-    
-    // Liberar memória alocada
-    free(Interpolacao1_R);
-    free(Interpolacao1_G);
-    free(Interpolacao1_B);
-    free(Interpolacao4_R);
-    free(Interpolacao4_G);
-    free(Interpolacao4_B);
-    free(imagemR);
-    free(imagemG);
-    free(imagemB);
+    liberarImagem(imagemOriginal);
+    liberarImagem(imagemInterpolada);
 
     return 0;
 }
