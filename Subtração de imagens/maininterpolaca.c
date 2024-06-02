@@ -209,7 +209,7 @@ int main(void) {
     scanf("%f", &n);
 
     printf("Insira o nome do arquivo: \n");
-    scanf("%[^\n]s%*c", nomeArquivo);
+    scanf("%s%*c", nomeArquivo);
     printf("Escolha o tipo de vizinhança para interpolação: \n");
     printf("1 - para uma (1) vizinhanca\n");
     printf("4 - para quatro (4) vizinhanca com média aritmética simples\n");
@@ -238,9 +238,9 @@ int main(void) {
     }
 
     if (vizinhanca == 1) {
-        salvarImagem("1vizinhanca.ppm", imagemInterpolada);
+        salvarImagem("1vizinhanca1.ppm", imagemInterpolada);
     } else if (vizinhanca == 4) {
-        salvarImagem("4vizinhanca.ppm", imagemInterpolada);
+        salvarImagem("4vizinhanca2.ppm", imagemInterpolada);
     }
 
     liberarImagem(imagemOriginal);

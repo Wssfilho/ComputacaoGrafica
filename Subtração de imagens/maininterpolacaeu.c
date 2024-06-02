@@ -53,7 +53,7 @@ void alocarMatrizesRGB(int largura, int altura, unsigned char ***imagemR, unsign
 // Função para carregar uma imagem a partir de um arquivo
 void carregarImagem(const char *nomeArquivo, int *largura, int *altura, unsigned char ***imagemR, unsigned char ***imagemG, unsigned char ***imagemB)
 {
-    FILE *arquivo = fopen(nomeArquivo, "rb");
+    FILE *arquivo = fopen(nomeArquivo, "r");
     if (!arquivo)
     {
         fprintf(stderr, "Erro ao abrir o arquivo de imagem\n");
