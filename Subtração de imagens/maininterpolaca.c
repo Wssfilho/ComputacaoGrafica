@@ -210,7 +210,6 @@ int main(void) {
 
     printf("Insira o nome do arquivo: \n");
     scanf("%[^\n]s%*c", nomeArquivo);
-
     printf("Escolha o tipo de vizinhança para interpolação: \n");
     printf("1 - para uma (1) vizinhanca\n");
     printf("4 - para quatro (4) vizinhanca com média aritmética simples\n");
